@@ -15,12 +15,17 @@ import PF.Session2.UserException.IllegalExpressionException;
  * Custom Exception is called if row number is greater than n  
  */
 public class SimplePattern {
-	
+	/**
+	 * 
+	 * @param n
+	 * @return pattern as string array
+	 * @throws IllegalExpressionException
+	 */
 		public String[] printPattern(int n) throws IllegalExpressionException{
 			String result[] = new String[n];
 			for(int i=0;i<n;i++){
-				System.out.println(spaces(i,n)+numbers(i, n));
-				result[i] = spaces(i,n) + numbers(i, n);
+				System.out.println(spaces(i,n)+numbers(i, n)); // print pattern
+				result[i] = spaces(i,n) + numbers(i, n); // save pattern as string
 			}
 			return result;
 		}
@@ -34,13 +39,13 @@ public class SimplePattern {
 		public String spaces(int row, int n) throws IllegalExpressionException{
 			
 			String space = "";
-			
+			// row used be less than n otherwise it will throw exception
 			if(row < n) {
 				for(int i=0;i<row;i++) {
 					space = space.concat(" ");
 				}
 			} else {
-				throw new IllegalExpressionException("Illegal Expression");
+				throw new IllegalExpressionException("Illegal Expression"); // exception thrown if row is greater than n
 			}
 			return space;
 		}
@@ -54,13 +59,13 @@ public class SimplePattern {
 		public String numbers(int row,int n) throws IllegalExpressionException {
 			
 			String number = "";
-			
+			// row used be less than n otherwise it will throw exception
 			if(row < n) {
 				for(int i=1;i <= n-row;i++) {
 					number = number.concat(String.valueOf(i));
 				}
 			} else {
-				throw new IllegalExpressionException("Illegal Expression");
+				throw new IllegalExpressionException("Illegal Expression"); // exception thrown if row is greater than n
 			}
 			return number;	
 		}
