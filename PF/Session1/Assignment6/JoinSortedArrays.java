@@ -21,38 +21,29 @@ public class JoinSortedArrays {
 		int counterB=0;
 		int counterC=0;
 		
-		for(counterC=0 ; counterC < asize+bsize ; counterC++){
-			if(a[counterA] < b[counterB]){	
-				
-				c[counterC] = a[counterA];
-				a[counterA] = Integer.MAX_VALUE;
-				
-				if(counterA != asize-1){
-					counterA++;
-				}
-			}
+		while(counterA < asize && counterB < bsize){
+			if(a[counterA] < b[counterB]){
+				c[counterC++] = a[counterA];
+				counterA++;
+			}	
 			else if(a[counterA] > b[counterB]){
-				c[counterC] = b[counterB];
-				b[counterB] = Integer.MAX_VALUE;
-				
-				if(counterB != bsize-1){
-					counterB++;
-				}
+				c[counterC++] = b[counterB];
+				counterB++;
 			}
 			else{
-				c[counterC] = b[counterB];
-				a[counterA] = Integer.MAX_VALUE;
-				b[counterB] = Integer.MAX_VALUE;
-				
-				if(counterA != asize-1){
-					counterA++;
-				}
-				
-				if(counterB != bsize-1){
-					counterB++;
-				}
-				
+				c[counterC++] = a[counterA]; 
+				c[counterC++] = b[counterB];
+				counterA++;
+				counterB++;
 			}
+		}
+		while(counterA < asize){
+			c[counterC++] = a[counterA];
+			counterA++;
+		}
+		while(counterB < bsize){
+			c[counterC++] = b[counterB];
+			counterB++;
 		}
 		return c;
 	}

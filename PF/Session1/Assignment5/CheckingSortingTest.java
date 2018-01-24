@@ -31,9 +31,10 @@ public class CheckingSortingTest {
 		
 		int[] input = new int[] {1,1,1,1,1,1,1};
 		int actual = checkingSorting.checkSort(input);
-		int expected = 0;
+		int expected = 1;
 		assertEquals(expected, actual);
 	}
+	
 	@Test
 	public void unsorted_number_test() {
 		
@@ -43,4 +44,12 @@ public class CheckingSortingTest {
 		assertEquals(expected, actual);
 	}
 
+	@Test
+	public void empty_array_test() {
+		
+		int[] input = new int[] {};
+		int actual = checkingSorting.checkSort(input);
+		int expected = 0;
+		assertEquals(expected, actual);
+	}
 }

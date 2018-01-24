@@ -16,7 +16,12 @@ public class BinaryToOctalTest {
 
 	@Test
 	public void BinaryToOctal_correctCase_test() {
-		assertEquals(16, binaryToOctal.octalConversion(001110));
+		assertEquals(16, binaryToOctal.octalConversion(1110));
+	}
+	
+	@Test
+	public void BinaryToOctal_all_zero_test() {
+		assertEquals(0, binaryToOctal.octalConversion(000000));
 	}
 	
 	@Test

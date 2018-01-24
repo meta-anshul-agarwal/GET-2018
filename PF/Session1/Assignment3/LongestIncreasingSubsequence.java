@@ -43,10 +43,9 @@ public class LongestIncreasingSubsequence {
 			int maxIndex = 0 ; // maxIndex is highest increasing sub sequence starting index
 			
 			for(rowCounter=0;rowCounter<index.length;rowCounter++){
-				System.out.print(" "+index[rowCounter]);
 				if (index[rowCounter] > maxValue){
 					maxValue = index[rowCounter];
-					maxIndex = rowCounter;
+					maxIndex = rowCounter+1;
 				}
 			}
 			
@@ -56,6 +55,6 @@ public class LongestIncreasingSubsequence {
 				maxValue = 1;
 			}
 			
-			return Arrays.copyOfRange(input, maxIndex-maxValue+1, maxIndex+1);
+			return Arrays.copyOfRange(input, maxIndex-maxValue, maxIndex);
 		}
 }

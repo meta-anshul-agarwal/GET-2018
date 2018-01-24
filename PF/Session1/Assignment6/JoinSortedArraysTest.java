@@ -31,5 +31,17 @@ public class JoinSortedArraysTest {
 		int[] expected = new int[] {-10,-9,-8,-7,-6,-5,-4,-3,-2,-1};
 		assertArrayEquals(expected, actual);
 	}
+	
+	@Test
+	public void empty_error_test() {
+		
+		int[] input1 = new int[] {};
+		int[] input2 = new int[] {};
+		int[] actual = new int[input1.length+input2.length];
+		actual =joinSortedArrays.join(input1, input1.length, input2
+				, input2.length,actual);
+		int[] expected = new int[] {};
+		assertArrayEquals(expected, actual);
+	}
 
 }

@@ -17,11 +17,11 @@ public class CheckingSorting {
 		
 		int result = 0; 	// assuming array is unsorted. 
 		
-		if(input[0] < input[input.length -1]){	// compares last and first element
+		if((input.length-1) >= 0 && input[0] <= input[input.length -1]){	// compares last and first element
 			result = assendingArray(input);		// if first number is less than last number then it can be in ascending order 
 		}
 		
-		else if(input[0] > input[input.length -1]){
+		else if((input.length-1) >= 0 && input[0] > input[input.length -1]){
 			result = descendingArray(input);	// if first number is larger than last number then it can be in descending order
 		}
 		
@@ -42,7 +42,7 @@ public class CheckingSorting {
 		int counter=1;
 		
 		for(int rowCounter=0;rowCounter<input.length-1;rowCounter++){
-			if(input[rowCounter] < input[counter++]){
+			if(input[rowCounter] <= input[counter++]){
 				continue;
 			}
 			else{
