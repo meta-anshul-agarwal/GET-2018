@@ -63,5 +63,15 @@ public class DiamondPatternTest {
 			throw new IllegalExpressionException(""+e);
 		}
 	}
-
+	
+	@Test
+	public void emptyPatternTest() throws IllegalExpressionException{
+		try{
+			String[] actual = diamondpattern.printPattern(0);
+			String[] expected = new String[] {};
+			assertArrayEquals(expected, actual);
+		} catch(IllegalExpressionException e){
+			throw new IllegalExpressionException(""+e);
+		}
+	}
 }

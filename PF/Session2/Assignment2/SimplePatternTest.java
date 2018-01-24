@@ -60,4 +60,15 @@ public class SimplePatternTest {
 			throw new IllegalExpressionException(""+e);
 		}
 	}
+	
+	@Test
+	public void emptyPatternTest() throws IllegalExpressionException{
+		try{
+			String[] actual = simplePattern.printPattern(0);
+			String[] expected = new String[] {};
+			assertArrayEquals(expected, actual);
+		} catch(IllegalExpressionException e){
+			throw new IllegalExpressionException(""+e);
+		}
+	}
 }

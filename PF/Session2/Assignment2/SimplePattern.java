@@ -22,12 +22,16 @@ public class SimplePattern {
 	 * @throws IllegalExpressionException
 	 */
 		public String[] printPattern(int n) throws IllegalExpressionException{
-			String result[] = new String[n];
-			for(int i=0;i<n;i++){
-				System.out.println(spaces(i,n)+numbers(i, n)); // print pattern
-				result[i] = spaces(i,n) + numbers(i, n); // save pattern as string
+			if(n>=0){
+				String result[] =  new String[n];
+				for(int i=0;i<n;i++){
+					System.out.println(spaces(i,n)+numbers(i, n)); // print pattern
+					result[i] = spaces(i,n) + numbers(i, n); // save pattern as string
+				}
+				return result;
+			} else {
+				throw new IllegalExpressionException("Negative values not allowed");
 			}
-			return result;
 		}
 		/**
 		 * 

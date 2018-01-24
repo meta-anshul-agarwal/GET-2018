@@ -23,12 +23,16 @@ public class DiamondPattern {
 	 * @throws IllegalExpressionException
 	 */
 	public String[] printPattern(int n) throws IllegalExpressionException{
-		String result[] = new String[2*n-1];
-		for(int i=0;i<2*n-1;i++){
-			System.out.println(spaces(i,n)+numbers(i, n)); // print pattern
-			result[i] = spaces(i,n) + numbers(i, n); // save pattern as string
+		if(n>=0){
+			String result[] = n==0 ? new String[0] : new String[(n-1)*2 + 1];
+			for(int i=0;i<2*n-1;i++){
+				System.out.println(spaces(i,n)+numbers(i, n)); // print pattern
+				result[i] = spaces(i,n) + numbers(i, n); // save pattern as string
+			}
+			return result;
+			} else {
+			throw new IllegalExpressionException("Negative value not allowed");
 		}
-		return result;
 	}
 		/**
 		 * 
