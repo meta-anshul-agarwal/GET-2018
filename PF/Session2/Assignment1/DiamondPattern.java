@@ -15,25 +15,15 @@ import PF.Session2.UserException.IllegalExpressionException;
  * Custom Exception is called if row number is greater than 2*n  
  */
 public class DiamondPattern {
-	public static void main(String[]args) throws IllegalExpressionException {
-			
-			System.out.println(spaces(0,7)+numbers(0, 7));
-			System.out.println(spaces(1,7)+numbers(1, 7));
-			System.out.println(spaces(2,7)+numbers(2, 7));
-			System.out.println(spaces(3,7)+numbers(3, 7));
-			System.out.println(spaces(4,7)+numbers(4, 7));
-			System.out.println(spaces(7,7)+numbers(7, 7));
-			System.out.println(spaces(6,7)+numbers(6, 7));
-			System.out.println(spaces(7,7)+numbers(7, 7));
-			System.out.println(spaces(8,7)+numbers(8, 7));
-			System.out.println(spaces(9,7)+numbers(9, 7));
-			System.out.println(spaces(10,7)+numbers(10, 7));
-			System.out.println(spaces(11,7)+numbers(11, 7));
-			System.out.println(spaces(12,7)+numbers(12, 7));
-			System.out.println(spaces(13,7)+numbers(13, 7));
-			
+
+	public String[] printPattern(int n) throws IllegalExpressionException{
+		String result[] = new String[2*n-1];
+		for(int i=0;i<2*n-1;i++){
+			System.out.println(spaces(i,n)+numbers(i, n));
+			result[i] = spaces(i,n) + numbers(i, n);
 		}
-	
+		return result;
+	}
 		/**
 		 * 
 		 * @param row
@@ -41,7 +31,7 @@ public class DiamondPattern {
 		 * @return spaces as string according to pattern
 		 * @throws IllegalExpressionException
 		 */
-		public static String spaces(int row, int n) throws IllegalExpressionException {
+		public String spaces(int row, int n) throws IllegalExpressionException {
 			
 			int i;
 			String space = "";
@@ -67,7 +57,7 @@ public class DiamondPattern {
 		  * @return number as string according to question
 		  * @throws IllegalExpressionException
 		  */
-		public static String numbers(int row,int n) throws IllegalExpressionException {
+		public String numbers(int row,int n) throws IllegalExpressionException {
 		
 		String number = "";
 		int j; 

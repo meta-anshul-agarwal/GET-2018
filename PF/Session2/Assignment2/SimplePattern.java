@@ -15,16 +15,15 @@ import PF.Session2.UserException.IllegalExpressionException;
  * Custom Exception is called if row number is greater than n  
  */
 public class SimplePattern {
-	public static void main(String[]args) throws IllegalExpressionException {
-			
-			System.out.println(spaces(0,5)+numbers(0, 5));
-			System.out.println(spaces(1,5)+numbers(1, 5));
-			System.out.println(spaces(2,5)+numbers(2, 5));
-			System.out.println(spaces(3,5)+numbers(3, 5));
-			System.out.println(spaces(4,5)+numbers(4, 5));
-			
-		}
 	
+		public String[] printPattern(int n) throws IllegalExpressionException{
+			String result[] = new String[n];
+			for(int i=0;i<n;i++){
+				System.out.println(spaces(i,n)+numbers(i, n));
+				result[i] = spaces(i,n) + numbers(i, n);
+			}
+			return result;
+		}
 		/**
 		 * 
 		 * @param row
@@ -32,7 +31,7 @@ public class SimplePattern {
 		 * @return spaces as string according to pattern
 		 * @throws IllegalExpressionException
 		 */
-		public static String spaces(int row, int n) throws IllegalExpressionException{
+		public String spaces(int row, int n) throws IllegalExpressionException{
 			
 			String space = "";
 			
@@ -52,7 +51,7 @@ public class SimplePattern {
 		  * @return number as string according to question
 		  * @throws IllegalExpressionException
 		  */
-		public static String numbers(int row,int n) throws IllegalExpressionException {
+		public String numbers(int row,int n) throws IllegalExpressionException {
 			
 			String number = "";
 			
