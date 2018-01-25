@@ -21,7 +21,7 @@ public class DiamondPatternTest {
 			
 		} catch(IllegalExpressionException e){
 			
-			throw new IllegalExpressionException(""+e);
+			throw new IllegalExpressionException("");
 		}
 	}
 	
