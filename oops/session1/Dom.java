@@ -12,7 +12,7 @@ import java.util.List;
 public class Dom extends CompositeElement {
 	CompositeElement element;
 	Dom(Element root){
-		super("0", "ansj");
+		super("0", "root");
 		element = (CompositeElement) root;
 	}
 	/**
