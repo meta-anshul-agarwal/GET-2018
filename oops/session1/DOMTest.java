@@ -6,12 +6,14 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class DOMTest {
 	static Dom dom;
 	static CompositeElement div1;
+	static CompositeElement root; 
 	static CompositeElement div2;
 	static CompositeElement div3;
 	static AtomicElement a;
@@ -21,7 +23,8 @@ public class DOMTest {
 	
 	@BeforeClass
 	 public static void doBefore() {
-		dom = new Dom();
+		root = new Root("0","root");
+		dom = new Dom(root);
 		div1 = new Div("1", "abc");
 		div2 = new Div("0", "abc");
 		a = new A("9", "ab", "asa");
@@ -29,12 +32,12 @@ public class DOMTest {
 		img3 = new Img("6", "ab", "abcd");
 		img1 = new Img("3", "ab", "abc"); 
 		img2 = new Img("8", "ab", "abcd"); 
-		dom.add(div1);
+		root.add(div1);
 		div1.add(div2);
 		div2.add(a);
 		div2.add(div3);
 		div3.add(img3);
-		dom.add(img1);
+		root.add(img1);
 		div1.add(img2);
 	}
 	@Test

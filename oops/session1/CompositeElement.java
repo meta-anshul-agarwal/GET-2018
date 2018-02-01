@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * This class is responsible for initializing Composite element i.e. the elements which have more tags inside it. 
  *
  */
-public class CompositeElement extends Element{
+abstract class CompositeElement extends Element{
 	
 	// List stores tags inside parent tag
 	List<Element> element = new ArrayList<Element>();
@@ -17,7 +17,7 @@ public class CompositeElement extends Element{
 	public CompositeElement(String id, String className) {
 		
 		// calling parent class for initialization
-		super(id,className);
+		super(id,className,true);
 	}
 	
 	
@@ -36,10 +36,7 @@ public class CompositeElement extends Element{
 		return this.element;
 	}
 	
-	// for checking instance of composite element
-	public boolean has_instance(){
-		return true;
-	}
+	
 	
 	
 }

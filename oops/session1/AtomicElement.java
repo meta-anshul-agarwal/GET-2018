@@ -6,7 +6,7 @@ package session1;
  * This class is responsible for initializing atomic element i.e. the elements which doesn't have any more tags inside it. 
  *
  */
-public class AtomicElement extends Element{
+abstract class AtomicElement extends Element{
 	
 	/**
 	 * 
@@ -18,7 +18,7 @@ public class AtomicElement extends Element{
 	public AtomicElement(String id, String className) {
 	
 		// calling parent class for initialization
-		super(id,className);
+		super(id,className,false);
 	}
 	
 

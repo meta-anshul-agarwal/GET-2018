@@ -9,18 +9,12 @@ import java.util.List;
  * @author Anshul Agarwal
  * 
  */
-public class Dom {
-	
-	// List containing tags in DOM
-	List<Element> element = new ArrayList<Element>();
-
-	// for adding element in DOM
-	void add(Element a){
-		
-		// adding element
-		element.add(a);
+public class Dom extends CompositeElement {
+	CompositeElement element;
+	Dom(Element root){
+		super("0", "ansj");
+		element = (CompositeElement) root;
 	}
-	
 	/**
 	 * 
 	 * @param id
@@ -30,22 +24,8 @@ public class Dom {
 	 */
 	Element findElementByID (String id) {
 		
-		// loop for elements in DOM
-		for( Element tag : element) {
-			
-			// calling function for checking id
-			Element return_tag = returnElementById(tag , id);
-			
-			// checking return_tag if null or not
-			if(return_tag != null){
-				
-				// returns return_tag
-				return return_tag;
-			}
-				
-		}
-		// if element not found returns null
-		return null;
+		// returns element 
+		return findElementById(this.element, id);
 	}
 	
 	/**
@@ -56,53 +36,35 @@ public class Dom {
 	 * 
 	 * 
 	 */
-	Element checkIdInComposite(Element tag, String id){
+	Element findElementById(Element tag , String id){
 		
 		// loop to check id of element in list of composite element
 		for(Element tagInList: ((CompositeElement) tag).tagList()) {
 			
-			// calling function for checking id
-			Element return_tag = returnElementById(tagInList , id);
-			
-			// checking return_tag if null or not
-			if(return_tag != null){
+			// checks tag id
+			if ( id == tagInList.getId()) {
 				
 				// return tag
-				return return_tag;
+				return tagInList;
 			}
-	
-		}
 		
+			// check if tagInList is a composite element or not
+			if(tagInList.isHasInstance()) {
+				// recursive call for checking list of tagInList element
+				Element return_tag = findElementById(tagInList, id);
+				
+				// checks if return_tag is null or not
+				if (return_tag != null){
+					
+					// returns tag
+					return return_tag;
+				}
+			}
+		}
 		// if element not found returns null
 		return  null;
 	}
 	
-	private Element returnElementById(Element tag, String id) {
-		
-		// checks tag id
-		if ( id == tag.getId()) {
-			
-			// return tag
-			return tag;
-		}
-	
-		// check if tagInList is a composite element or not
-		if(tag.has_instance()) {
-			System.out.println(""+tag.getId());
-			// recursive call for checking list of tagInList element
-			Element return_tag = checkIdInComposite(tag, id);
-			
-			// checks if return_tag is null or not
-			if (return_tag != null){
-				
-				// returns tag
-				return return_tag;
-			}
-		}
-		
-		// if element not found then return null
-		return null;
-	}
 
 	/**
 	 * 
@@ -113,51 +75,10 @@ public class Dom {
 	 */
 	public List<Element> findElementByClass(String className) {
 		
-		// list contains element of same class
-		List<Element> list = new ArrayList<Element>();
-		
-		// loop for checking DOM element class name
-		for( Element tag : element) {
-			
-			// add elements to return list
-			list.addAll(AddElementByClass(tag , className));
-		}
-		
-		// returns list
-		return list;
+		// return list of elements with same class
+		return addElementByClass(this.element, className);
 	}
 	
-	/**
-	 * 
-	 * @param tag
-	 * @param className
-	 * @return list containing tags
-	 */
-	private List<Element> AddElementByClass(Element tag,
-			String className) {
-		
-		// List contains tags
-		List<Element> list = new ArrayList<Element>();
-		
-		// checks tag's class name
-		if ( className == ((Element) tag).getClassName()) {
-			
-			// add the tag into list
-			list.add(tag);
-			
-		}  
-		
-		//checks instance
-		if(tag.has_instance()) {
-			
-			// calling recursive function to check list if composite element
-			list.addAll( checkClassInComposite(tag, className) );
-		}
-		
-		// returns list
-		return list;
-	}
-
 	/**
 	 * 
 	 * @param tag
@@ -167,16 +88,27 @@ public class Dom {
 	 * This is a recursive method to find element by Id
 	 * 
 	 */
-	List<Element> checkClassInComposite(Element tag, String className) {
+	List<Element> addElementByClass(Element tag, String className) {
 		
 		// list containing tags
 		List<Element> list = new ArrayList<Element>();
 		
 		// loop to check class name of element in list of composite element
 		for(Element tagInList: ((CompositeElement) tag).tagList()) {
+			// checks tag's class name
+			if ( className == tagInList.getClassName()) {
+				
+				// add the tag into list
+				list.add(tagInList);
+				
+			}  
 			
-			// add returned tags to list
-			list.addAll(AddElementByClass(tagInList , className));
+			//checks instance
+			if(tagInList.isHasInstance()) {
+				
+				// calling recursive function to check list if composite element
+				list.addAll( addElementByClass(tagInList, className) );
+			}
 			
 		}
 		// returns list
@@ -188,24 +120,9 @@ public class Dom {
 	 * @return the list of the hierarchy of elements
 	 */
 	public List<String> displayDOM(){
-		// list contains String of DOM hierarchy
-		List<String> hierarchy = new ArrayList<String>();
-		
-		// loop for adding string into hierarchy
-		for (Element tag : element) {
-			
-			// checks instance of composite element
-			if(tag.has_instance()){
-				hierarchy.add("<" + tag.getClass().getSimpleName() + " id='"+tag.getId()+"'>");
-				hierarchy.addAll( displayDomRecursive(tag, 1) );
-				hierarchy.add("</" + tag.getClass().getSimpleName() + ">");
-			} else{
-				hierarchy.add("<" + tag.getClass().getSimpleName() +  " id='"+tag.getId()+"'>");
-			}
-		}
-		
-		// returns list
-		return hierarchy;
+
+		return displayDomRecursive(this.element, 0);
+	
 	}
 	/**
 	 * Recursive function to find the hierarchy of elements
@@ -222,7 +139,7 @@ public class Dom {
 		for (Element ele : ((CompositeElement) tag).tagList()) {
 			
 			// checks instance of composite element
-			if(ele.has_instance()){
+			if(ele.isHasInstance()){
 				hierarchy.add(spaces(count)+"<" + ele.getClass().getSimpleName() + " id='"+ele.getId()+"'>");
 				hierarchy.addAll( displayDomRecursive(ele, count + 1) );
 				hierarchy.add(spaces(count)+"</" + ele.getClass().getSimpleName() + ">");
