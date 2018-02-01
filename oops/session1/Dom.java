@@ -9,10 +9,9 @@ import java.util.List;
  * @author Anshul Agarwal
  * 
  */
-public class Dom extends CompositeElement {
+public class Dom {
 	CompositeElement element;
 	Dom(Element root){
-		super("0", "root");
 		element = (CompositeElement) root;
 	}
 	/**
