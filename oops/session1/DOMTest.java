@@ -32,12 +32,12 @@ public class DOMTest {
 		img3 = new Img("6", "ab", "abcd");
 		img1 = new Img("3", "ab", "abc"); 
 		img2 = new Img("8", "ab", "abcd"); 
-		root.add(div1);
+		((CompositeElement) root).add(div1);
 		div1.add(div2);
 		div2.add(a);
 		div2.add(div3);
 		div3.add(img3);
-		root.add(img1);
+		((CompositeElement) root).add(img1);
 		div1.add(img2);
 	}
 	@Test

@@ -1,5 +1,8 @@
 package session1;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 
  * @author Anshul Agarwal
@@ -16,7 +19,7 @@ abstract class Element {
 	String className;
 	
 	// Constructor for initializing values
-	public Element(String id, String className ,boolean hasInstance) {
+	public Element(String id, String className) {
 		
 		// initializing id
 		this.id = id;
@@ -24,7 +27,6 @@ abstract class Element {
 		// initializing class name
 		this.className = className;
 		
-		this.hasInstance = hasInstance;
 	}
 	
 	public boolean isHasInstance() {
@@ -47,6 +49,21 @@ abstract class Element {
 		return className;
 	}
 
-
+	Element findById(Element root , String id){
+		return null;
+	}
+	
+	List<Element> findByClass(Element ele , String className){
+		return null;
+	}
+	/**
+	 * Recursive function to find the hierarchy of elements
+	 * @param element - the composite element
+	 * @param count - counts the hierarchy, upto what level the element is
+	 * @return - the list
+	 */
+	public List<String> displayDomRecursive(Element tag, String spaces){
+		return null;
+	}
 		
 }
