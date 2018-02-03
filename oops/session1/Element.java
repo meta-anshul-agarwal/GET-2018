@@ -49,11 +49,11 @@ abstract class Element {
 		return className;
 	}
 
-	Element findById(Element root , String id){
+	Element findById( String id){
 		return null;
 	}
 	
-	List<Element> findByClass(Element ele , String className){
+	List<Element> findByClass(String className){
 		return null;
 	}
 	/**
@@ -62,7 +62,7 @@ abstract class Element {
 	 * @param count - counts the hierarchy, upto what level the element is
 	 * @return - the list
 	 */
-	public List<String> displayDomRecursive(Element tag, String spaces){
+	public List<String> displayDomRecursive(String spaces){
 		return null;
 	}
 		

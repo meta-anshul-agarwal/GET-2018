@@ -37,12 +37,12 @@ public class CompositeElement extends Element{
 		return this.element;
 	}
 	
-	Element findById(Element ele , String id){
-		if(ele.id == id){
-			return ele;
+	Element findById(String id){
+		if(this.id == id){
+			return this;
 		}
 		for(Element e : element){
-			Element return_tag = e.findById(e , id);
+			Element return_tag = e.findById(id);
 			if(return_tag!=null){
 				return return_tag;
 			}
@@ -50,14 +50,14 @@ public class CompositeElement extends Element{
 		return null;
 	}
 	
-	List<Element> findByClass( Element ele , String className){
+	List<Element> findByClass(String className){
 		List<Element> list = new ArrayList<Element>();
-		if(ele.className.equals(className)){
+		if(this.className.equals(className)){
 			
-			list.add(ele); 
+			list.add(this); 
 		}
 		for(Element e : element){
-			list.addAll(e.findByClass(e , className));
+			list.addAll(e.findByClass(className));
 		}
 		return list;
 	}
@@ -68,20 +68,20 @@ public class CompositeElement extends Element{
 	 * @param count - counts the hierarchy, upto what level the element is
 	 * @return - the list
 	 */
-	public List<String> displayDomRecursive(Element tag, String spaces){
+	public List<String> displayDomRecursive(String spaces){
 		
 		// loop for adding string into hierarchy
 		List<String> hierarchy = new ArrayList<String>();
 		
 		// loop for adding string of composite elements into hierarchy
-		for (Element ele : ((CompositeElement) tag).tagList()) { 
+		for (Element ele : ((CompositeElement) this).tagList()) { 
 				if(ele.hasInstance){
 					hierarchy.add(spaces+"<" + ele.getClass().getSimpleName() + " id='"+ele.getId()+"'>");
-					hierarchy.addAll( ele.displayDomRecursive(ele, spaces+"    ") );
+					hierarchy.addAll( ele.displayDomRecursive(spaces+"    ") );
 					hierarchy.add(spaces +"</" + ele.getClass().getSimpleName() + ">");
 				}
 				else{
-					hierarchy.addAll(ele.displayDomRecursive(ele, spaces));
+					hierarchy.addAll(ele.displayDomRecursive(spaces));
 				}
 		}
 		

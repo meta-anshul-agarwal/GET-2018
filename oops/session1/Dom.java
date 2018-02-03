@@ -23,7 +23,7 @@ public class Dom {
 	 */
 	Element findElementByID (String id) {
 		// returns element 
-		return this.element.findById(this.element, id);
+		return this.element.findById(id);
 	}
 	
 	/**
@@ -35,7 +35,7 @@ public class Dom {
 	 */
 	public List<Element> findElementByClass(String className) {
 		// return list of elements with same class
-		return this.element.findByClass(this.element, className);
+		return this.element.findByClass(className);
 	}
 		
 	/**
@@ -43,7 +43,7 @@ public class Dom {
 	 * @return the list of the hierarchy of elements
 	 */
 	public List<String> displayDOM(){
-		return this.element.displayDomRecursive(this.element, "");
+		return this.element.displayDomRecursive("");
 	
 	}
 }

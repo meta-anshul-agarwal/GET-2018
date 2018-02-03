@@ -25,17 +25,17 @@ abstract class AtomicElement extends Element{
 		this.hasInstance = false;
 	}
 	
-	Element findById(Element ele , String id){
-		if(ele.id == id){
-			return ele;
+	Element findById(String id){
+		if(this.id == id){
+			return this;
 		}
 		return null;
 	}
 	
-	List<Element> findByClass(Element ele , String className){
+	List<Element> findByClass(String className){
 		List<Element> list = new ArrayList<Element>();
-		if(ele.className == className){
-			list.add(ele);
+		if(this.className == className){
+			list.add(this);
 		}
 		return list;
 	}
@@ -46,11 +46,11 @@ abstract class AtomicElement extends Element{
 	 * @param count - counts the hierarchy, upto what level the element is
 	 * @return - the list
 	 */
-	public List<String> displayDomRecursive(Element tag, String spaces){
+	public List<String> displayDomRecursive(String spaces){
 		
 		// loop for adding string into hierarchy
 		List<String> hierarchy = new ArrayList<String>();
-		hierarchy.add(spaces+"<" + tag.getClass().getSimpleName() + " id='"+tag.getId()+"'>");
+		hierarchy.add(spaces+"<" + this.getClass().getSimpleName() + " id='"+this.getId()+"'>");
 		
 		// returns list
 		return hierarchy;
