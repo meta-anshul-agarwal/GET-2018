@@ -67,10 +67,21 @@ public class DOMTest {
 	public void dom_test() {
 		
 		List<String> expected= new ArrayList<String>();
-		expected.addAll(Arrays.asList("<Div id='1'>","    <Div id='0'>","        <A id='9'>","        <Div id='4'>",
-									  "            <Img id='6'>","        </Div>","    </Div>","    <Img id='8'>",
-									  "</Div>","<Img id='3'>" ));
+		expected.addAll(Arrays.asList("<Root id='0'>",
+				"    <Div id='1'>",
+				"        <Div id='0'>",
+				"            <A id='9'>",
+				"            <Div id='4'>",
+				"                <Img id='6'>",
+				"            </Div>",
+				"        </Div>",
+				"        <Img id='8'>",
+				"    </Div>",
+				"    <Img id='3'>",
+				"</Root>" ));
+		
 		List<String> actual = dom.displayDOM();
+		
 		assertEquals(expected,actual);
 		
 	}

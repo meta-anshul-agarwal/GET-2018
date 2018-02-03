@@ -1,6 +1,5 @@
 package session1;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,8 +11,7 @@ abstract class Element {
 	
 	// id of tag
 	String id;
-	
-	boolean hasInstance;
+
 
 	// class of tag
 	String className;
@@ -27,14 +25,6 @@ abstract class Element {
 		// initializing class name
 		this.className = className;
 		
-	}
-	
-	public boolean isHasInstance() {
-		return hasInstance;
-	}
-
-	public void setHasInstance(boolean hasInstance) {
-		this.hasInstance = hasInstance;
 	}
 	
 	// returns id of a particular tag

@@ -22,7 +22,7 @@ abstract class AtomicElement extends Element{
 	
 		// calling parent class for initialization
 		super(id,className);
-		this.hasInstance = false;
+		
 	}
 	
 	Element findById(String id){

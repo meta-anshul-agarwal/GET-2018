@@ -18,7 +18,7 @@ public class CompositeElement extends Element{
 		
 		// calling parent class for initialization
 		super(id,className);
-		this.hasInstance = true;
+		
 	}
 	
 	
@@ -72,19 +72,16 @@ public class CompositeElement extends Element{
 		
 		// loop for adding string into hierarchy
 		List<String> hierarchy = new ArrayList<String>();
+		hierarchy.add(spaces+"<" + this.getClass().getSimpleName() + " id='"+this.getId()+"'>");
 		
 		// loop for adding string of composite elements into hierarchy
-		for (Element ele : ((CompositeElement) this).tagList()) { 
-				if(ele.hasInstance){
-					hierarchy.add(spaces+"<" + ele.getClass().getSimpleName() + " id='"+ele.getId()+"'>");
-					hierarchy.addAll( ele.displayDomRecursive(spaces+"    ") );
-					hierarchy.add(spaces +"</" + ele.getClass().getSimpleName() + ">");
-				}
-				else{
-					hierarchy.addAll(ele.displayDomRecursive(spaces));
-				}
+		for (Element ele : this.tagList()) { 
+				
+					hierarchy.addAll(ele.displayDomRecursive(spaces+"    "));
+				
 		}
-		
+		hierarchy.add(spaces +"</" + this.getClass().getSimpleName() + ">");
+
 		// returns list
 		return hierarchy;
 	}
