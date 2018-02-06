@@ -1,10 +1,7 @@
 package session2;
 
 import static org.junit.Assert.*;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -15,7 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class TestSurvey {
-	
+
 	private static List<Participant> participantList ;
 	private static IOFile read ;
 	private static List<Question> questionList ;
@@ -42,12 +39,12 @@ public class TestSurvey {
 	}
 	
 	@Test
-	public void test() {
-		String[] arr1 = new String[] {"1","communication","feedback"};					
+	public void passTest() {
+		String[] arr1 = new String[] {"1","communication","feedback"};							
 		String[] arr2 = new String[] {"2","communication/Delivery Process","feedback correct"};			
 		String[] arr3 = new String[] {"2","communication/Delivery Process","feedback given"};	
-		
 		int i = 0;
+
 		for (Question q : questionList){
 			p1.setParticipantAnswer(q, arr1[i]);
 			p2.setParticipantAnswer(q, arr2[i]);
@@ -68,8 +65,7 @@ public class TestSurvey {
 				}
 			}
 		}
-		HashMap< String, String> actual = new LinkedHashMap< String, String>();
-		
+		HashMap<Integer,LinkedHashMap<String,String>> actual = new LinkedHashMap<Integer, LinkedHashMap<String,String>>();
 		HashMap<Integer,LinkedHashMap<String,String>> expected = new LinkedHashMap<Integer, LinkedHashMap<String,String>>();
 		HashMap< String, String> question = new LinkedHashMap< String, String>();
 		question.put("1","33%");
@@ -85,19 +81,13 @@ public class TestSurvey {
 		question.put("4","0%");
 		question.put("5","0%");
 		expected.put(2, (LinkedHashMap<String, String>)question.clone());
-		boolean result= false;
 		i=1;
 		for(Question q : questionList){
 			if(q.getType().equalsIgnoreCase("single")){
-				actual = (q.getResultObject().getResultPercentage());
-				if(actual.equals(expected.get(i++))==true) {
-					result = true ;
-				} else{
-					result = false;
-				}
+				actual.put(i++, (LinkedHashMap<String, String>) (q.getResultObject().getResultPercentage()));
 			}
 		}
-		assertEquals(true,result);
+		assertTrue(expected.equals(actual));
 	}
 
 }
