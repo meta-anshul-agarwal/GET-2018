@@ -1,0 +1,112 @@
+			body{
+				margin : 200px;
+				margin-top : 40px;
+				background : url('../image/background.jpg');
+				background-repeat : no-repeat;
+				background-size : cover;
+				
+		
+			}
+			*{
+				margin : 0px;
+				padding : 0px;
+				font-family : "Arial";
+
+			}
+			.container h1{
+				text-align : center;
+				font-weight : bold;
+				padding : 6em;
+			}
+
+			.container{
+				margin : 30px;
+
+				background-repeat : no-repeat;
+				background-size : cover;
+				border-radius : 25px;
+				filter: blur(2px);
+			}
+			
+
+			#flex1{
+				display : flex;
+
+			}
+			#flex1 .photo{
+				position : relative;
+				margin: 60px;
+				margin-top : 20px;
+				flex : 1;
+
+			}
+
+			#flex1 .photo img{
+				position : relative;
+				width : 90%;
+				box-shadow: 5px 5px 2px grey;
+
+			}
+			#flex1 .info{
+				margin : 40px;
+				margin-right : 150px;
+				margin-top : 10px;
+				margin-left : 0px;
+				flex : 2;
+				background-color : transparent;
+			}
+			.contact{
+				background-color : transparent;
+				padding : 5px;
+				display : flex;
+			}
+			.icon-contact{
+				background-color : transparent;
+				padding-top : 5px;
+				padding-left : 10px;
+				flex : 1;
+			}
+			.contact-info{
+
+				background-color : transparent;
+				padding-left : -20px;
+				padding-top : 10px;
+				flex : 8;
+			}
+			h2{
+				text-shadow: 2px 1px 1px #161113;
+			}
+			.pic:hover{
+				transform: scale(1.5);
+			}
+			hr{
+				 width: 90%;
+				 height: 3px;
+				 border: 0;
+				 border-top: 3px solid grey;
+			}
+			
+			ul {
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+				overflow: hidden;
+				background : transparent;
+				
+			}
+
+			li {
+				float: left;
+			}
+
+			li a {
+				display: block;
+				color: black;
+				text-align: center;
+				padding: 14px 16px;
+				text-decoration: none;
+			}
+
+			li a:hover {
+				background-color: grey;
+			}
