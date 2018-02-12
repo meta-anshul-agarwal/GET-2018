@@ -1,0 +1,3 @@
+Q1,single,overall rating,1/2/3/4/5
+Q2,multi,Areas of improvement,Service Quality/Communication/Delivery Process
+Q3,text,Trainee Feedback
