@@ -1,0 +1,163 @@
+*{
+  font-family: "PT Sans";
+  margin: 0;
+  padding: 0;
+}
+#navbar{
+  background-color: #2d3e50;
+  display: flex;
+  padding-right: 20px;
+  position: fixed;
+  top : 0;
+  width: 100%;
+
+}
+#right-corner ul{
+  list-style-type: none;
+
+}
+#left-corner{
+  flex : 1;
+}
+#left-corner p{
+  color : white ;
+  padding : 10px;
+  padding-left : 20px;
+  display: inline-block;
+}
+#left-corner p:hover{
+    color: grey;
+}
+#right-corner ul li{
+  color: white;
+  display: inline-block;
+  padding: 10px;
+  flex : 1;
+}
+
+#site{
+  float: left;
+}
+.active{
+  color: inherit;
+}
+#get-started{
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 5px;
+  border: solid 2px white;
+  border-radius: 4px;
+  padding-bottom: 5px;
+  background-color: white;
+  font-size: 16px;
+  color: #328dd6;
+}
+#white-button{
+  padding-bottom: 150px;
+}
+#right-corner ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+}
+#right-corner ul li a:hover{
+    color: grey;
+}
+#third-div{
+  margin-top: 20px;
+}
+#third-div-header{
+  padding-top: 8px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+#third-div-header p{
+  display: inline-block;
+  text-align: center;
+  font-variant: small-caps;
+  font-size: 20px;
+}
+#big-bold-text{
+  font-size: 30px;
+  display: inline-block;
+  border: solid 2px white;
+  border-radius: 4px;
+  margin: 200px;
+  margin-bottom: 10px;
+
+}
+
+#middle-text p{
+  margin-bottom: 10px;
+  font-variant: small-caps;
+}
+#big-bold-text p{
+  padding: 120px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: white;
+}
+#second-div{
+  text-align: center;
+  background-color: #328dd6;
+}
+#flex-options{
+  padding-top: 5px;
+  padding-left: 15px;
+  padding-bottom: 15px;
+  display: flex;
+}
+i{
+  padding-right: 3px;
+
+}
+.flex1{
+  padding-left: 14px;
+  padding-right: 14px;
+  flex : 1;
+}
+#fourth-div{
+  background-color:#2d3e50 ;
+  display: flex;
+}
+#images{
+  margin: 40px;
+  margin-left: 260px;
+  flex : 1;
+}
+#image-info{
+  margin: 40px;
+  margin-left: 0px;
+  flex : 2;
+}
+#fifth-div-header{
+  text-align: center;
+  font-variant: small-caps;
+  font-size: 20px;
+  font-weight: bold;
+  padding-top: 20px;
+}
+#fifth-div-info{
+  display: flex;
+}
+#form{
+  padding:39px;
+  flex:1;
+}
+#info{
+  padding: 39px;
+  flex:1;
+}
+
+input[type=text] {
+    
+    width: 100%;
+    padding: 5px;
+    border-radius: 4px;
+}
+#footer{
+  padding: 2px;
+  background-color: black;
+  text-align: center;
+}
