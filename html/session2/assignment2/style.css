@@ -1,0 +1,25 @@
+#circle1{
+  stroke-width : 5;
+  stroke : blue;
+  fill : blue;
+}
+#circle2{
+  stroke-width : 5;
+  stroke : grey;
+  fill : white;
+}
+#circle3{
+  stroke-width : 5;
+  stroke : red;
+  fill : white;
+}
+#circle4{
+  stroke-width : 10;
+  stroke : orange;
+  fill : orange;
+}
+svg{
+  margin : 0 auto;
+
+  display: block;
+}

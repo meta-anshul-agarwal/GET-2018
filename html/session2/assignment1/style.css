@@ -1,0 +1,102 @@
+*{
+  margin : 0 ;
+  padding : 0 ;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+body{
+  background-color: #DCDCDC;
+}
+header{
+  position: fixed;
+  top: 0;
+  margin : 20px;
+  font-size : 25px;
+}
+textarea{
+    padding: 12px 0;
+}
+label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+}
+#submit:hover {
+    background-color: #FF7770;
+}
+input#fname , #lname{
+  background-image:url("http://www.aorank.com/tutorial/icons_inside_input_fields/images/icon_name.png");
+}
+input#email{
+  background-image:url("http://www.aorank.com/tutorial/icons_inside_input_fields/images/email.png");
+}
+input#phone{
+  background-image:url("https://goo.gl/M1TJkH");
+}
+input#address , #city , #zipcode{
+  background-image:url("https://goo.gl/3RGKZP");
+}
+#state{
+  background-image:url("https://goo.gl/ZWn9b7");
+  height: 45px;
+}
+#web{
+  background-image:url("https://goo.gl/cviiSf");
+}
+#description{
+  background-image:url("https://goo.gl/iQ3KcE");
+}
+.styling-icon{
+  background-repeat:no-repeat;
+  background-position:6px;
+  border:1px solid #DADADA;
+  margin-top:10px;
+  text-indent:35px;
+  width:310px;
+  height:30px;
+  font-size:14px;
+  box-shadow:0 0 10px;
+  -webkit-box-shadow:0 0 10px;
+  /* For I.E */
+  -moz-box-shadow:0 0 10px;
+  /* For Mozilla Web Browser*/
+  border-radius:5px;
+  -webkit-border-radius:5px;
+  /* For I.E */
+  -moz-border-radius:5px
+  /* For Mozilla Web Browser*/
+}
+#submit{
+background-color: #FF9980;
+border-radius: 5px;
+border: none;
+padding: 10px 25px 10px 25px;
+color: #FFF;
+text-shadow: 1px 1px 1px #949494;
+margin-top : 10px;
+float: right;
+}
+.container {
+    margin-top: 30px;
+    margin-left: 400px;
+    margin-right: 400px;
+    border-radius: 5px;
+    background-color: inherit;
+    padding: 20px;
+}
+.col-25 {
+    text-align: right;
+    float: left;
+    width: 35%;
+    margin-top: 6px;
+    margin-right: 10px;
+}
+.col-75 {
+float:left;
+    width: 55%;
+    margin-top: 6px;
+}
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
