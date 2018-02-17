@@ -1,0 +1,26 @@
+<html>
+<head>
+	<title>Geolocation API</title>
+</head>
+<body>
+	<p>Click the button to get your coordinates.</p>
+	<button onclick="getLocation()">Try It</button>
+	<p id="demo"></p>
+
+	<script>
+		var x = document.getElementById("demo");
+		/*method to find latitude and longitude using HTML5 geolocation API*/
+		function getLocation() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(showPosition);
+			} else { 
+				x.innerHTML = "Geolocation is not supported by this browser.";
+			}
+		}
+		/*method to print latitude and longitude*/
+		function showPosition(position) {
+			x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
+		}
+	</script>
+</body>
+</html>
