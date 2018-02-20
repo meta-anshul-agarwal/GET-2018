@@ -6,7 +6,6 @@ function push() {
     var data = document.getElementById('data').value;
     top1 = top1 + 1;
     stack1[top1] = data;
-    console.log(stack1);
   }
   else{
     alert("stack is full");
@@ -18,7 +17,6 @@ function pop(){
   if(top1 > -1){
     var data = stack1[top1];
     top1 = top1 - 1;
-    console.log(top1);
     document.getElementById('show').innerHTML = data;
   }
   else{
