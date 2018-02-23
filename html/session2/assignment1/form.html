@@ -1,0 +1,135 @@
+<!--DOCTYPE html-->
+<html>
+  <!--header starts-->
+  <head>
+    <!--link for css file and icons-->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+  </head>
+  <!--Body Starts-->
+  <body>
+    <header>
+        Contact Us Today!
+    </header>
+    <!--main div block-->
+    <div class="container">
+      <!--form begins-->
+      <form action="#">
+        <!--div for each field in the form(here for first name)-->
+        <div class="row">
+          <!--div for label of each field-->
+          <div class="col-25">
+            <label for="fname">First Name</label>
+          </div>
+          <!--div for icon and placeholder for each field-->
+          <div class="col-75">
+          <input type="text" id="fname" class = "styling-icon" name="firstname" placeholder="Your name.." pattern="[A-Za-z]*" required>
+          </div>
+        </div>
+          <!--div for each field in the form(here for last name)-->
+        <div class="row">
+          <div class="col-25">
+            <label for="lname">Last Name</label>
+          </div>
+          <div class="col-75">
+            <input type="text" id="lname" name="lastname" class = "styling-icon" placeholder="Your last name.." pattern="[A-Za-z]*" required>
+          </div>
+        </div>
+          <!--div for each field in the form(here for email)-->
+        <div class="row">
+          <div class="col-25">
+            <label for="email">E-mail</label>
+          </div>
+          <div class="col-75">
+            <input type="email" id="email" name="email" class = "styling-icon" placeholder="E-mail Address" required>
+          </div>
+        </div>
+          <!--div for each field in the form(here for phone number)-->
+        <div class="row">
+          <div class="col-25">
+            <label for="phone">Phone #</label>
+          </div>
+          <div class="col-75">
+            <input type="tel" id="phone" name="phone" class = "styling-icon" placeholder="(845)555-1212" pattern="[\(]\d{3}[\)]\d{3}[\-]\d{4}" required>
+          </div>
+        </div>
+          <!--div for each field in the form(here for address)-->
+        <div class="row">
+          <div class="col-25">
+            <label for="address">Address</label>
+          </div>
+          <div class="col-75">
+            <input type="text" id="address" name="address" class = "styling-icon" placeholder="Address" required>
+          </div>
+        </div>
+          <!--div for each field in the form(here for city)-->
+        <div class="row">
+          <div class="col-25">
+            <label for="city">City</label>
+          </div>
+          <div class="col-75">
+            <input type="text" id="city" name="city" class = "styling-icon" placeholder="city" pattern = "[A-Za-z]*+\s[A-Za-z]*" required>
+          </div>
+        </div>
+          <!--div for each field in the form(here for State)-->
+        <div class="row">
+          <div class="col-25">
+            <label for="state">State</label>
+          </div>
+          <div class="col-75">
+            <select id="State" name="state" class = "styling-icon">
+              <option value="select">Please select your state</option>
+              <option value="rajasthan">Rajasthan</option>
+              <option value="up">U.P</option>
+              <option value="mp">M.P</option>
+            </select>
+          </div>
+        </div>
+          <!--div for each field in the form(here for zip code)-->
+        <div class="row">
+          <div class="col-25">
+            <label for="zipcode">Zip Code</label>
+          </div>
+          <div class="col-75">
+            <input type="tel" id="zipcode" class = "styling-icon" name="zipcode" placeholder="Zip Code" pattern = "[0-9]*" maxlength="6"  required>
+          </div>
+        </div>
+          <!--div for each field in the form(here for web domain)-->
+        <div class="row">
+          <div class="col-25">
+            <label for="web">Website or Domain Name</label>
+          </div>
+          <div class="col-75">
+            <input type="url" id="web" name="web" class = "styling-icon" placeholder="Website or Domain Name" required>
+          </div>
+        </div>
+          <!--div for each field in the form(here for hosting)-->
+        <div class="row">
+          <div class="col-25">
+            <label for="host">Do you have hosting?</label>
+          </div>
+          <div class="col-75" style="padding-top : 14px;">
+            <input type="radio" name="host" value="yes"> yes<br>
+            <input type="radio" name="host" value="no"> no<br>
+          </div>
+        </div>
+          <!--div for each field in the form(here for project description)-->
+        <div class="row">
+          <div class="col-25">
+            <label for="description">Project Description</label>
+          </div>
+          <div class="col-75">
+            <textarea id="description" name="description" class = "styling-icon" placeholder="Project Description" style="height:50px"></textarea>
+          </div>
+        </div>
+          <!--div for each field in the form(here for submit button)-->
+        <div class="row" >
+          <div class = "col-75">
+          <input id = "submit" type="submit" value="Submit">
+        </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
