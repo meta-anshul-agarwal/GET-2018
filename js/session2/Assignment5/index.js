@@ -49,14 +49,27 @@ function addInputElement(){
 
 // add button adds element in UI
 addButton.onclick = function(e){
-  storeDetails();
-  addInputElement();
+	var innerDivs = inputDiv.getElementsByTagName('DIV');
+	var inputTag = innerDivs[innerDivs.length - 1].getElementsByTagName('input');
+	if((inputTag[0].value != "") && (inputTag[1].value != "") && (inputTag[2].value != "")){
+		if(inputTag[2].value > inputTag[1].value){
+			storeDetails();
+			addInputElement();
+		}
+		else{
+		alert("maximum value should be greater than minimum");
+		}
+	}
+	else{
+		alert("Values can't be null");
+	}
 }
 
 // stores details of input in session storage
 function storeDetails() {
   var innerDivs = inputDiv.getElementsByTagName('DIV');
   var inputTag = innerDivs[innerDivs.length - 1].getElementsByTagName('input');
+  if((inputTag[0].value != "") && (inputTag[1].value != "") && (inputTag[2].value != "")){
   if(inputTag[2].value > inputTag[1].value){
     var obj = {
       "name" : inputTag[0].value ,
@@ -71,8 +84,12 @@ function storeDetails() {
   }
   alert("maximum value should be greater than minimum");
   return false;
+  }
+  else{
+		alert("Values can't be null");
+		return false;
+  }
 }
-
 // ok button hides input div and shows output table
 okButton.onclick = function(e){
   if(storeDetails()){
