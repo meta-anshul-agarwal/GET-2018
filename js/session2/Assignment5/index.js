@@ -125,7 +125,7 @@ function clearInputDivs(){
 function clearOutputTable(){
   var objects = JSON.parse(sessionStorage.getItem("table"));
   for( i = 0 ; i < objects.length ; i++){
-    outputTable.deleteRow(i);
+    outputTable.deleteRow(0);
   }
 }
 
