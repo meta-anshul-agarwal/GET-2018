@@ -7,12 +7,11 @@ var completeTaskDiv = document.getElementById('showcompletedtask');
 var completeTaskHeading = document.getElementById('text');
 var priorityButton = document.getElementById('priority');
 var sortButton = document.getElementById('sortButton');
-
+var objects =  JSON.parse(localStorage.getItem("ToDo"));
 //Create new task
 addButton.onclick = function(){
 	if(taskName.value != ""){
 	  if (typeof(Storage) !== "undefined") {
-		var objects =  JSON.parse(localStorage.getItem("ToDo"));
 		// Storing different values of to do task in an object
 		var obj = {
 		  "taskName" : taskName.value,
@@ -35,41 +34,26 @@ addButton.onclick = function(){
 	}
 }
 
-
 //update the value of drop down priority button
 function changePriority(priorityValue) {
   priorityButton.innerHTML = priorityValue;
 }
 
-//Adding tasks to the current div
-function addToCurrentDiv(taskvalue , privalue , datevalue) {
-  var div = document.createElement("Div");
+function makeStructure(taskvalue , privalue , datevalue){
+	var div = document.createElement("Div");
   var deleteButton = document.createElement("BUTTON");
-  deleteButton.style.height = "16px";
-  deleteButton.style.width = "16px";
-  deleteButton.style.background = "white";
-  deleteButton.style.backgroundImage = "url('https://cdn0.iconfinder.com/data/icons/pixon-1/24/Close_delete_outline_remove-16.png')";
-  deleteButton.style.border = "none";
+	deleteButton.classList.add("dltButton");
   deleteButton.onclick = function(e){
     deletetask(e.target, taskvalue);
   }
   div.appendChild(deleteButton);
   var taskButton = document.createElement("button");
-  taskButton.style.background = "white";
-  taskButton.style.border = "none";
-  taskButton.style.height = "16px";
-  taskButton.style.width = "auto";
   taskButton.innerHTML = taskvalue;
-  taskButton.setAttribute("data-toggle","tooltip");
-  taskButton.setAttribute("data-placement","bottom");
+	taskButton.classList.add("taskButton");
   taskButton.setAttribute("title","Click to move to completed task");
-  taskButton.style.padding = "none";
-  taskButton.style.cursor = "pointer";
   taskButton.onclick = function(e){
     moveAndUpdateTask(e.target , taskButton.innerHTML);
   }
-  taskButton.style.boder = "none";
-  taskButton.style.display = "inline";
   div.appendChild(taskButton);
   var priorityElement = document.createElement("p")
   priorityElement.innerHTML = "[ " + privalue + " ] ";
@@ -79,38 +63,16 @@ function addToCurrentDiv(taskvalue , privalue , datevalue) {
   dateElement.innerHTML = " { " + datevalue + " }";
   dateElement.style.display = "inline";
   div.appendChild(dateElement);
+	return div;
+}
+//Adding tasks to the current div
+function addToCurrentDiv(taskvalue , privalue , datevalue) {
+	var div = makeStructure(taskvalue , privalue , datevalue);
   insertAfter(div,currentTaskHeading);
 }
-
 //Add elements in the complete list
 function addToCompleteDiv(taskvalue , privalue, completeDate) {
-  var div = document.createElement("Div");
-  var taskButton = document.createElement("button");
-  taskButton.style.background = "white";
-  taskButton.style.border = "none";
-  taskButton.style.height = "20px";
-  taskButton.style.width = "auto";
-  taskButton.style.cursor = "pointer";
-  var striketag = document.createElement("strike");
-  striketag.innerHTML = taskvalue;
-  taskButton.appendChild(striketag);
-  taskButton.onclick = function(e){
-    moveAndUpdateTask(e.target , striketag.innerHTML);
-  }
-  taskButton.style.boder = "none";
-  taskButton.setAttribute("data-toggle","tooltip");
-  taskButton.setAttribute("data-placement","bottom");
-  taskButton.setAttribute("title","Click to move to current task");
-  taskButton.style.display = "inline";
-  div.appendChild(taskButton);
-  var priorityElement = document.createElement("p")
-  priorityElement.innerHTML = "[ " + privalue + " ] ";
-  priorityElement.style.display = "inline";
-  div.appendChild(priorityElement);
-  var dateElement = document.createElement("p")
-  dateElement.innerHTML =" { " + completeDate + " }";
-  dateElement.style.display = "inline";
-  div.appendChild(dateElement);
+	var div = makeStructure(taskvalue , privalue , completeDate);
   insertAfter(div , completeTaskHeading);
 }
 
@@ -121,27 +83,26 @@ function insertAfter(newNode, referenceNode) {
 
 //Used to change status and moving task to complete and vice-versa
 function moveAndUpdateTask(btn, name){
-  var obj =  JSON.parse(localStorage.getItem("ToDo"));
   //loop for traversing localStorage
-  for(i = 0 ; i < obj.length ; i++){
+  for(i = 0 ; i < objects.length ; i++){
     //checks if task is current or not
-    if(obj[i].status == 0){
-      if(obj[i].taskName == name){
-        obj[i].status = 1;
-        obj[i].completeDate = todayDate();
-        addToCompleteDiv(obj[i].taskName, obj[i].priorityValue, obj[i].completeDate);
-        removeItemFromCurrent(obj[i].taskName);
-        localStorage.setItem("ToDo" , JSON.stringify(obj));
+    if(objects[i].status == 0){
+      if(objects[i].taskName == name){
+        objects[i].status = 1;
+        objects[i].completeDate = todayDate();
+        addToCompleteDiv(objects[i].taskName, objects[i].priorityValue, objects[i].completeDate);
+        removeItemFromCurrent(objects[i].taskName);
+        localStorage.setItem("ToDo" , JSON.stringify(objects));
         break;
       }
     }
     else{
-      if(obj[i].taskName == name){
-        obj[i].status = 0;
-				obj[i].completeDate = null;
-        addToCurrentDiv(obj[i].taskName, obj[i].priorityValue, obj[i].assignDate);
-        removeItemFromCompleted(obj[i].taskName);
-        localStorage.setItem("ToDo" , JSON.stringify(obj));
+      if(objects[i].taskName == name){
+        objects[i].status = 0;
+				objects[i].completeDate = null;
+        addToCurrentDiv(objects[i].taskName, objects[i].priorityValue, objects[i].assignDate);
+        removeItemFromCompleted(objects[i].taskName);
+        localStorage.setItem("ToDo" , JSON.stringify(objects));
         break;
       }
     }
@@ -151,10 +112,9 @@ function moveAndUpdateTask(btn, name){
 function onload(){
 	var key;
 	document.getElementById("date").value = todayDate();
-	if(localStorage.getItem("ToDo")){
-	  var obj =  JSON.parse(localStorage.getItem("ToDo"));
-	  for(var i = 0 ; i < obj.length ; i++){
-	    key = obj[i];
+	if(localStorage.getItem("ToDo") && localStorage.getItem("ToDo") != "null"){
+	  for(var i = 0 ; i < objects.length ; i++){
+	    key = objects[i];
 	    if(key.status == 0) {
 	      addToCurrentDiv(key.taskName,key.priorityValue,key.assignDate);
 	    }
@@ -169,18 +129,28 @@ function onload(){
 	}
 }
 //sorting in descending order
-function sortdescending(sortName){
+function sort(sortName , type){
   clearall();
   sortButton.innerHTML = sortName;
   document.getElementById("date").value = todayDate();
-	var obj =  JSON.parse(localStorage.getItem("ToDo"));
-	obj.sort(GetSortOrder("taskName"));
-  for(var i = 0 ; i < obj.length ; i++){
-    if(obj[i].status == 0) {
-      addToCurrentDiv(obj[i].taskName, obj[i].priorityValue, obj[i].assignDate);
+	objects.sort(GetSortOrder("taskName"));
+	var length = objects.length;
+  for(var i = 0 ; i < length ; i++){
+    if(objects[i].status == 0) {
+			if(type == 2){
+      	addToCurrentDiv(objects[i].taskName, objects[i].priorityValue, objects[i].assignDate);
+			}
+			else{
+				addToCurrentDiv(objects[length - i - 1].taskName, objects[length - i - 1].priorityValue, objects[length - i - 1].assignDate);
+			}
     }
     else {
-      addToCompleteDiv(obj[i].taskName, obj[i].priorityValue, obj[i].completeDate);
+			if(type == 2){
+      	addToCompleteDiv(objects[i].taskName, objects[i].priorityValue, objects[i].completeDate);
+			}
+			else{
+				addToCompleteDiv(objects[length - i - 1].taskName, objects[length - i - 1].priorityValue, objects[length - i - 1].assignDate);
+			}
     }
   }
 }
@@ -196,21 +166,7 @@ function GetSortOrder(task) {
         return 0;
     }
 }
-//sorting tasks in ascending order
-function sortAscending(sortName){
-  clearall();
-  sortButton.innerHTML = sortName;
-	var obj =  JSON.parse(localStorage.getItem("ToDo"));
-	obj.sort(GetSortOrder("taskName"));
-  for(var i = obj.length - 1; i >= 0 ;i--){
-    if(obj[i].status == 0) {
-      addToCurrentDiv(obj[i].taskName, obj[i].priorityValue, obj[i].assignDate);
-    }
-    else {
-      addToCompleteDiv(obj[i].taskName, obj[i].priorityValue, obj[i].completeDate);
-    }
-  }
-}
+
 //remove all task from UI
 function clearall() {
   var innerDivs = currentTaskDiv.getElementsByTagName("DIV");
@@ -246,7 +202,18 @@ function todayDate() {
 //removes respective task from current list
 function removeItemFromCurrent(taskName) {
   var innerDivs = currentTaskDiv.getElementsByTagName("DIV");
-  for(var i = 0 ; i < innerDivs.length ; i++)
+  removeElement(innerDivs , taskName);
+}
+
+//removes respective task from completed list
+function removeItemFromCompleted(taskName) {
+  var innerDivs = completeTaskDiv.getElementsByTagName("DIV");
+  removeElement(innerDivs , taskName);
+}
+
+//removes element from inner div
+function removeElement(innerDivs , taskName){
+	for(var i = 0 ; i < innerDivs.length ; i++)
   {
      var key = innerDivs[i].getElementsByTagName("button");
      if(key[1].innerHTML == taskName){
@@ -254,37 +221,20 @@ function removeItemFromCurrent(taskName) {
      }
   }
 }
-
-//removes respective task from completed list
-function removeItemFromCompleted(taskName) {
-  var innerDivs = completeTaskDiv.getElementsByTagName("DIV");
-  for(var i = 0 ; i < innerDivs.length ; i++)
-  {
-     var key = innerDivs[i].getElementsByTagName("button");
-     var striketag = key[0].getElementsByTagName("strike");
-     if(striketag[0].innerHTML == taskName){
-       innerDivs[i].remove();
-     }
-  }
-}
-
 //removes repesctive task
 function deletetask(btn,taskvalue){
-	var obj =  JSON.parse(localStorage.getItem("ToDo"));
   if(confirm("want's to delete task : "+taskvalue)){
     var innerDivs = currentTaskDiv.getElementsByTagName("DIV");
-    for(var i = 0 ; i < innerDivs.length ; i++)
-    {
+    for(var i = 0 ; i < innerDivs.length ; i++) {
        var key = innerDivs[i].getElementsByTagName("button");
        var tempbtn = innerDivs[i].getElementsByTagName("button");
        if(btn == tempbtn[0]){
          innerDivs[i].remove();
-
 				 // loop for deleting task from local Storage
-				 for(j=0;j<obj.length ; j++){
-					 if(obj[j].taskName === key[1].innerHTML)
-         		obj.splice(j,1);
-						localStorage.setItem("ToDo" , JSON.stringify(obj));
+				 for(j=0;j<objects.length ; j++){
+					 if(objects[j].taskName === key[1].innerHTML)
+         		objects.splice(j,1);
+						localStorage.setItem("ToDo" , JSON.stringify(objects));
 				 }
        }
     }

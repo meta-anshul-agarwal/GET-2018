@@ -4,7 +4,7 @@
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-
+    <link href="style.css" rel = "stylesheet">
   </head>
   <body onload="onload()">
     <div class="card" style="width: 100%;border : none;">
@@ -37,8 +37,8 @@
             <div class="btn-group btn-block">
               <button type="button" id = "sortButton" class="btn btn-danger btn-block dropdown-toggle" data-toggle="dropdown">Sort</button>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="javascript:sortAscending('A-Z')">A-Z</a>
-                <a class="dropdown-item" href="javascript:sortdescending('Z-A')">Z-A</a>
+                <a class="dropdown-item" href="javascript:sort('A-Z',1)">A-Z</a>
+                <a class="dropdown-item" href="javascript:sort('Z-A',2)">Z-A</a>
               </div>
             </div>
           </div>
