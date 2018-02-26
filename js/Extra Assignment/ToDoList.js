@@ -68,14 +68,23 @@ function makeStructure(taskvalue , privalue , datevalue){
 //Adding tasks to the current div
 function addToCurrentDiv(taskvalue , privalue , datevalue) {
 	var div = makeStructure(taskvalue , privalue , datevalue);
+	div.style.textDecoration = "none";
   insertAfter(div,currentTaskHeading);
 }
 //Add elements in the complete list
 function addToCompleteDiv(taskvalue , privalue, completeDate) {
 	var div = makeStructure(taskvalue , privalue , completeDate);
+	div.style.textDecoration = "line-through";
   insertAfter(div , completeTaskHeading);
 }
-
+function divCompleteList(div){
+	div.style.textDecoration = "line-through";
+	insertAfter(div , completeTaskHeading);
+}
+function divCurrentList(div){
+	div.style.textDecoration = "none";
+	insertAfter(div , currentTaskHeading);
+}
 //Using to insert after a element
 function insertAfter(newNode, referenceNode) {
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
@@ -83,30 +92,37 @@ function insertAfter(newNode, referenceNode) {
 
 //Used to change status and moving task to complete and vice-versa
 function moveAndUpdateTask(btn, name){
-  //loop for traversing localStorage
-  for(i = 0 ; i < objects.length ; i++){
-    //checks if task is current or not
-    if(objects[i].status == 0){
-      if(objects[i].taskName == name){
-        objects[i].status = 1;
-        objects[i].completeDate = todayDate();
-        addToCompleteDiv(objects[i].taskName, objects[i].priorityValue, objects[i].completeDate);
-        removeItemFromCurrent(objects[i].taskName);
-        localStorage.setItem("ToDo" , JSON.stringify(objects));
-        break;
-      }
-    }
-    else{
-      if(objects[i].taskName == name){
-        objects[i].status = 0;
-				objects[i].completeDate = null;
-        addToCurrentDiv(objects[i].taskName, objects[i].priorityValue, objects[i].assignDate);
-        removeItemFromCompleted(objects[i].taskName);
-        localStorage.setItem("ToDo" , JSON.stringify(objects));
-        break;
-      }
-    }
-  }
+	for(j=0;j<objects.length ; j++){
+		 if(objects[j].taskName === name){
+			 if(objects[j].status == 0){
+				 var innerDivs = currentTaskDiv.getElementsByTagName("DIV");
+				 for(var i = 0 ; i < innerDivs.length ; i++) {
+						var tempbtn = innerDivs[i].getElementsByTagName("button");
+						if(name === tempbtn[1].innerHTML){
+							 divCompleteList(innerDivs[i]);
+							 objects[j].status = 1;
+							 objects[j].completeDate = todayDate();
+							 localStorage.setItem("ToDo" , JSON.stringify(objects));
+							 break;
+						 }
+					}
+			 }
+			 else{
+				 var innerDivs = completeTaskDiv.getElementsByTagName("DIV");
+				 for(var i = 0 ; i < innerDivs.length ; i++) {
+						var tempbtn = innerDivs[i].getElementsByTagName("button");
+						if(name == tempbtn[1].innerHTML){
+							objects[j].status = 0;
+				 			objects[j].completeDate = null;
+							divCurrentList(innerDivs[i]);
+							localStorage.setItem("ToDo" , JSON.stringify(objects));
+							break;
+						}
+					}
+					break;
+			 }
+		 }
+	 }
 }
 // to show tasks on UI after reloading , traversing localStorage
 function onload(){
@@ -133,23 +149,26 @@ function sort(sortName , type){
   clearall();
   sortButton.innerHTML = sortName;
   document.getElementById("date").value = todayDate();
-	objects.sort(GetSortOrder("taskName"));
 	var length = objects.length;
   for(var i = 0 ; i < length ; i++){
     if(objects[i].status == 0) {
-			if(type == 2){
+			if(type == 1){
+				console.log("increasing current   "+objects[i].taskName);
       	addToCurrentDiv(objects[i].taskName, objects[i].priorityValue, objects[i].assignDate);
 			}
 			else{
+				console.log("decreasing current   "+objects[i].taskName);
 				addToCurrentDiv(objects[length - i - 1].taskName, objects[length - i - 1].priorityValue, objects[length - i - 1].assignDate);
 			}
     }
     else {
-			if(type == 2){
+			if(type == 1){
+				console.log("increasing complete   "+objects[i].taskName);
       	addToCompleteDiv(objects[i].taskName, objects[i].priorityValue, objects[i].completeDate);
 			}
 			else{
-				addToCompleteDiv(objects[length - i - 1].taskName, objects[length - i - 1].priorityValue, objects[length - i - 1].assignDate);
+				console.log("decreasing complete   "+objects[i].taskName);
+				addToCompleteDiv(objects[length - i - 1].taskName, objects[length - i - 1].priorityValue, objects[length - i - 1].completeDate);
 			}
     }
   }
@@ -199,44 +218,30 @@ function todayDate() {
   return today;
 }
 
-//removes respective task from current list
-function removeItemFromCurrent(taskName) {
-  var innerDivs = currentTaskDiv.getElementsByTagName("DIV");
-  removeElement(innerDivs , taskName);
-}
 
-//removes respective task from completed list
-function removeItemFromCompleted(taskName) {
-  var innerDivs = completeTaskDiv.getElementsByTagName("DIV");
-  removeElement(innerDivs , taskName);
-}
-
-//removes element from inner div
-function removeElement(innerDivs , taskName){
-	for(var i = 0 ; i < innerDivs.length ; i++)
-  {
-     var key = innerDivs[i].getElementsByTagName("button");
-     if(key[1].innerHTML == taskName){
-       innerDivs[i].remove();
-     }
-  }
-}
 //removes repesctive task
 function deletetask(btn,taskvalue){
   if(confirm("want's to delete task : "+taskvalue)){
-    var innerDivs = currentTaskDiv.getElementsByTagName("DIV");
-    for(var i = 0 ; i < innerDivs.length ; i++) {
-       var key = innerDivs[i].getElementsByTagName("button");
-       var tempbtn = innerDivs[i].getElementsByTagName("button");
-       if(btn == tempbtn[0]){
-         innerDivs[i].remove();
-				 // loop for deleting task from local Storage
-				 for(j=0;j<objects.length ; j++){
-					 if(objects[j].taskName === key[1].innerHTML)
-         		objects.splice(j,1);
-						localStorage.setItem("ToDo" , JSON.stringify(objects));
+		for(j=0;j<objects.length ; j++){
+			 if(objects[j].taskName === taskvalue){
+
+				 if(objects[j].status == 0){
+					 var innerDivs = currentTaskDiv.getElementsByTagName("DIV");
 				 }
-       }
+				 else{
+					 var innerDivs = completeTaskDiv.getElementsByTagName("DIV");
+
+				 }
+
+	    for(var i = 0 ; i < innerDivs.length ; i++) {
+	       var tempbtn = innerDivs[i].getElementsByTagName("button");
+	       if(btn == tempbtn[0]){
+	         	innerDivs[i].remove();
+	       		objects.splice(j,1);
+						localStorage.setItem("ToDo" , JSON.stringify(objects));
+					}
+	     }
+		 }
     }
   }
 }
