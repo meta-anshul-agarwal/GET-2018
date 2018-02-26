@@ -7,7 +7,7 @@ var completeTaskDiv = document.getElementById('showcompletedtask');
 var completeTaskHeading = document.getElementById('text');
 var priorityButton = document.getElementById('priority');
 var sortButton = document.getElementById('sortButton');
-var objects =  JSON.parse(localStorage.getItem("ToDo"));
+var objects =  null;
 //Create new task
 addButton.onclick = function(){
 	if(taskName.value != ""){
@@ -142,6 +142,7 @@ function onload(){
 	else{
 		var obj = [];
 		localStorage.setItem("ToDo" , JSON.stringify(obj));
+		objects = JSON.parse(localStorage.getItem("ToDo"));
 	}
 }
 //sorting in descending order
