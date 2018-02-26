@@ -10,25 +10,31 @@ var sortButton = document.getElementById('sortButton');
 
 //Create new task
 addButton.onclick = function(){
-
-  if (typeof(Storage) !== "undefined") {
-
-    // Storing different values of to do task in an object
-    var obj = {
-      "priorityValue" : priorityButton.innerHTML,
-      "date" : date.value,
-      "status" : 0,
-      "completeDate" : null
-    };
-
-    //Storing values in local storage with key value pairs
-    localStorage.setItem(taskName.value, JSON.stringify(obj));
-    addToCurrentDiv(taskName.value, priorityButton.innerHTML , date.value);
-  }
-  else {
-      document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
-  }
+	if(taskName.value != ""){
+	  if (typeof(Storage) !== "undefined") {
+		var objects =  JSON.parse(localStorage.getItem("ToDo"));
+		// Storing different values of to do task in an object
+		var obj = {
+		  "taskName" : taskName.value,
+		  "priorityValue" : priorityButton.innerHTML,
+		  "status" : 0,
+		  "completeDate" : null,
+			"assignDate" : date.value
+		};
+		objects.push(obj);
+		//Storing values in local storage with key value pairs
+		localStorage.setItem("ToDo", JSON.stringify(objects));
+		addToCurrentDiv(taskName.value, priorityButton.innerHTML , date.value);
+	  }
+	  else {
+		  document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+	  }
+	}
+	else{
+		alert("Please assign some task");
+	}
 }
+
 
 //update the value of drop down priority button
 function changePriority(priorityValue) {
@@ -115,32 +121,27 @@ function insertAfter(newNode, referenceNode) {
 
 //Used to change status and moving task to complete and vice-versa
 function moveAndUpdateTask(btn, name){
-
-  var obj;
-
+  var obj =  JSON.parse(localStorage.getItem("ToDo"));
   //loop for traversing localStorage
-  for(i = 0 ; i < localStorage.length ; i++){
-    var key = localStorage.key(i);
-    obj = JSON.parse(localStorage.getItem(key));
-
+  for(i = 0 ; i < obj.length ; i++){
     //checks if task is current or not
-    if(obj.status == 0){
-
-      if(key == name){
-        obj.status = 1;
-        obj.completeDate = todayDate();
-        addToCompleteDiv(key, obj.priorityValue, obj.completeDate);
-        removeItemFromCurrent(key);
-        localStorage.setItem(key , JSON.stringify(obj));
+    if(obj[i].status == 0){
+      if(obj[i].taskName == name){
+        obj[i].status = 1;
+        obj[i].completeDate = todayDate();
+        addToCompleteDiv(obj[i].taskName, obj[i].priorityValue, obj[i].completeDate);
+        removeItemFromCurrent(obj[i].taskName);
+        localStorage.setItem("ToDo" , JSON.stringify(obj));
         break;
       }
     }
     else{
-      if(key == name){
-        obj.status = 0;
-        addToCurrentDiv(key , obj.priorityValue, obj.date);
-        removeItemFromCompleted(key);
-        localStorage.setItem(key , JSON.stringify(obj));
+      if(obj[i].taskName == name){
+        obj[i].status = 0;
+				obj[i].completeDate = null;
+        addToCurrentDiv(obj[i].taskName, obj[i].priorityValue, obj[i].assignDate);
+        removeItemFromCompleted(obj[i].taskName);
+        localStorage.setItem("ToDo" , JSON.stringify(obj));
         break;
       }
     }
@@ -148,55 +149,68 @@ function moveAndUpdateTask(btn, name){
 }
 // to show tasks on UI after reloading , traversing localStorage
 function onload(){
-  var key;
-  document.getElementById("date").value = todayDate();
-  for(var i = 0 ; i < localStorage.length ; i++){
-    key = localStorage.key(i);
-    var obj = JSON.parse(localStorage.getItem(key));
-    if(obj.status == 0) {
-      addToCurrentDiv(key,obj.priorityValue,obj.date);
-    }
-    else {
-      addToCompleteDiv(key,obj.priorityValue,obj.date);
-    }
-  }
+	var key;
+	document.getElementById("date").value = todayDate();
+	if(localStorage.getItem("ToDo")){
+	  var obj =  JSON.parse(localStorage.getItem("ToDo"));
+	  for(var i = 0 ; i < obj.length ; i++){
+	    key = obj[i];
+	    if(key.status == 0) {
+	      addToCurrentDiv(key.taskName,key.priorityValue,key.assignDate);
+	    }
+	    else {
+	      addToCompleteDiv(key.taskName,key.priorityValue,key.completeDate);
+	    }
+	  }
+	}
+	else{
+		var obj = [];
+		localStorage.setItem("ToDo" , JSON.stringify(obj));
+	}
 }
 //sorting in descending order
 function sortdescending(sortName){
   clearall();
   sortButton.innerHTML = sortName;
-  var key;
   document.getElementById("date").value = todayDate();
-  for(var i = 0 ; i < localStorage.length ; i++){
-    key = localStorage.key(i);
-    var obj = JSON.parse(localStorage.getItem(key));
-    if(obj.status == 0) {
-      addToCurrentDiv(key,obj.priorityValue,obj.date);
+	var obj =  JSON.parse(localStorage.getItem("ToDo"));
+	obj.sort(GetSortOrder("taskName"));
+  for(var i = 0 ; i < obj.length ; i++){
+    if(obj[i].status == 0) {
+      addToCurrentDiv(obj[i].taskName, obj[i].priorityValue, obj[i].assignDate);
     }
     else {
-      addToCompleteDiv(key,obj.priorityValue,obj.date);
+      addToCompleteDiv(obj[i].taskName, obj[i].priorityValue, obj[i].completeDate);
     }
   }
 }
 
+// gives sorting order
+function GetSortOrder(task) {
+    return function(a, b) {
+        if (a[task] > b[task]) {
+            return 1;
+        } else if (a[task] < b[task]) {
+            return -1;
+        }
+        return 0;
+    }
+}
 //sorting tasks in ascending order
 function sortAscending(sortName){
   clearall();
   sortButton.innerHTML = sortName;
-  var key;
-  document.getElementById("date").value = todayDate();
-  for(var i = localStorage.length - 1; i >= 0 ;i--){
-    key = localStorage.key(i);
-    var obj = JSON.parse(localStorage.getItem(key));
-    if(obj.status == 0) {
-      addToCurrentDiv(key,obj.priorityValue,obj.date);
+	var obj =  JSON.parse(localStorage.getItem("ToDo"));
+	obj.sort(GetSortOrder("taskName"));
+  for(var i = obj.length - 1; i >= 0 ;i--){
+    if(obj[i].status == 0) {
+      addToCurrentDiv(obj[i].taskName, obj[i].priorityValue, obj[i].assignDate);
     }
     else {
-      addToCompleteDiv(key,obj.priorityValue,obj.date);
+      addToCompleteDiv(obj[i].taskName, obj[i].priorityValue, obj[i].completeDate);
     }
   }
 }
-
 //remove all task from UI
 function clearall() {
   var innerDivs = currentTaskDiv.getElementsByTagName("DIV");
@@ -256,6 +270,7 @@ function removeItemFromCompleted(taskName) {
 
 //removes repesctive task
 function deletetask(btn,taskvalue){
+	var obj =  JSON.parse(localStorage.getItem("ToDo"));
   if(confirm("want's to delete task : "+taskvalue)){
     var innerDivs = currentTaskDiv.getElementsByTagName("DIV");
     for(var i = 0 ; i < innerDivs.length ; i++)
@@ -264,7 +279,13 @@ function deletetask(btn,taskvalue){
        var tempbtn = innerDivs[i].getElementsByTagName("button");
        if(btn == tempbtn[0]){
          innerDivs[i].remove();
-         localStorage.removeItem(key[1].innerHTML);
+
+				 // loop for deleting task from local Storage
+				 for(j=0;j<obj.length ; j++){
+					 if(obj[j].taskName === key[1].innerHTML)
+         		obj.splice(j,1);
+						localStorage.setItem("ToDo" , JSON.stringify(obj));
+				 }
        }
     }
   }
