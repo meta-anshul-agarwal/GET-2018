@@ -145,37 +145,41 @@ function onload(){
 	}
 }
 //sorting in descending order
-function sort(sortName , type){
+function sorts(sortName , type){
+	var innerDivs = currentTaskDiv.getElementsByTagName("DIV");
+  var innerDivs1 = completeTaskDiv.getElementsByTagName("DIV");
   clearall();
   sortButton.innerHTML = sortName;
   document.getElementById("date").value = todayDate();
 	var length = objects.length;
-  for(var i = 0 ; i < length ; i++){
+	if(type == 1){
+		objects.sort(GetAscendingSortOrder("taskName"));
+	}
+	else{
+		objects.sort(GetDescendingSortOrder("taskName"));
+	}
+  for(i = 0 ; i < length ; i++){
     if(objects[i].status == 0) {
-			if(type == 1){
-				console.log("increasing current   "+objects[i].taskName);
+			if(type == 2){
       	addToCurrentDiv(objects[i].taskName, objects[i].priorityValue, objects[i].assignDate);
 			}
 			else{
-				console.log("decreasing current   "+objects[i].taskName);
-				addToCurrentDiv(objects[length - i - 1].taskName, objects[length - i - 1].priorityValue, objects[length - i - 1].assignDate);
+				addToCurrentDiv(objects[i].taskName, objects[i].priorityValue, objects[i].assignDate);
 			}
     }
     else {
-			if(type == 1){
-				console.log("increasing complete   "+objects[i].taskName);
+			if(type == 2){
       	addToCompleteDiv(objects[i].taskName, objects[i].priorityValue, objects[i].completeDate);
 			}
 			else{
-				console.log("decreasing complete   "+objects[i].taskName);
-				addToCompleteDiv(objects[length - i - 1].taskName, objects[length - i - 1].priorityValue, objects[length - i - 1].completeDate);
+				addToCompleteDiv(objects[i].taskName, objects[i].priorityValue, objects[i].completeDate);
 			}
     }
   }
 }
 
-// gives sorting order
-function GetSortOrder(task) {
+// gives decreasing sorting order
+function GetDescendingSortOrder(task) {
     return function(a, b) {
         if (a[task] > b[task]) {
             return 1;
@@ -186,6 +190,17 @@ function GetSortOrder(task) {
     }
 }
 
+// gives increasing sorting order
+function GetAscendingSortOrder(task) {
+    return function(a, b) {
+        if (a[task] < b[task]) {
+            return 1;
+        } else if (a[task] > b[task]) {
+            return -1;
+        }
+        return 0;
+    }
+}
 //remove all task from UI
 function clearall() {
   var innerDivs = currentTaskDiv.getElementsByTagName("DIV");
@@ -224,15 +239,12 @@ function deletetask(btn,taskvalue){
   if(confirm("want's to delete task : "+taskvalue)){
 		for(j=0;j<objects.length ; j++){
 			 if(objects[j].taskName === taskvalue){
-
 				 if(objects[j].status == 0){
 					 var innerDivs = currentTaskDiv.getElementsByTagName("DIV");
 				 }
 				 else{
 					 var innerDivs = completeTaskDiv.getElementsByTagName("DIV");
-
 				 }
-
 	    for(var i = 0 ; i < innerDivs.length ; i++) {
 	       var tempbtn = innerDivs[i].getElementsByTagName("button");
 	       if(btn == tempbtn[0]){
