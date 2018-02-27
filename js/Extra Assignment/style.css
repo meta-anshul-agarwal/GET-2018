@@ -20,3 +20,8 @@
   display: inline;
   float : right;
 }
+
+.priButton{
+  display: inline;
+  padding-left: 10px;
+}

@@ -73,7 +73,7 @@ function makeStructure(taskvalue , privalue , datevalue){
   div.appendChild(deleteButton);
   var priorityElement = document.createElement("p")
   priorityElement.innerHTML = "[ " + privalue + " ] ";
-  priorityElement.style.display = "inline";
+	priorityElement.classList.add("priButton");
   div.appendChild(priorityElement);
 	var taskButton = document.createElement("button");
 	taskButton.innerHTML = taskvalue;
@@ -87,10 +87,10 @@ function makeStructure(taskvalue , privalue , datevalue){
   dateElement.innerHTML = " { " + datevalue + " }";
 	dateElement.classList.add("assign-date");
   div.appendChild(dateElement);
-	var completedateElement = document.createElement("span")
-  completedateElement.innerHTML = " { " + todayDate() + " }";
-	completedateElement.classList.add("complete-date");
-  div.appendChild(completedateElement);
+	var completeDateElement = document.createElement("span")
+  completeDateElement.innerHTML = " { " + todayDate() + " }";
+	completeDateElement.classList.add("complete-date");
+  div.appendChild(completeDateElement);
 	return div;
 }
 //Adding tasks to the current div
@@ -101,7 +101,6 @@ function addToCurrentDiv(taskvalue , privalue , datevalue) {
 	span[0].style.display = "inline";
 	span[1].style.display = "none";
   insertAfter(div,currentTaskHeading);
-
 }
 function divCurrentList(div){
 	div.style.textDecoration = "none";
@@ -109,7 +108,6 @@ function divCurrentList(div){
 	span[0].style.display = "inline";
 	span[1].style.display = "none";
 	insertAfter(div , currentTaskHeading);
-
 }
 //Add elements in the complete list
 function addToCompleteDiv(taskvalue , privalue, completeDate) {
@@ -126,7 +124,6 @@ function divCompleteList(div){
 	span[0].style.display = "none";
 	span[1].style.display = "inline";
 	insertAfter(div , completeTaskHeading);
-
 }
 
 //Using to insert after a element
