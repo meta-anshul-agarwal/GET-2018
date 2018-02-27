@@ -8,42 +8,46 @@ var completeTaskHeading = document.getElementById('text');
 var priorityButton = document.getElementById('priority');
 var sortButton = document.getElementById('sortButton');
 var taskList =  null;
+var id = 0 ;
 
 // to show tasks on UI after reloading , traversing localStorage
 function onload(){
 	var key;
 	document.getElementById("date").value = todayDate();
-	if(localStorage.getItem("ToDo") && localStorage.getItem("ToDo") != "null"){
+	if(localStorage.getItem("ToDo")){
 		taskList = JSON.parse(localStorage.getItem("ToDo"));
 		for(var i = 0 ; i < taskList.length ; i++){
 			key = taskList[i];
-			if(key.status == 0) {
-			addToCurrentDiv(key.taskName,key.priorityValue,key.assignDate);
+			if(key.task.status == 0) {
+				addToCurrentDiv(key.task.taskName,key.task.priorityValue,key.task.assignDate);
 			}
 			else {
-			addToCompleteDiv(key.taskName,key.priorityValue,key.assignDate);
+				addToCompleteDiv(key.task.taskName,key.task.priorityValue,key.task.assignDate);
 			}
 		}
 		sorts('Sort' , 4);
 	}
 	else{
 		var obj = [];
-		localStorage.setItem("ToDo" , JSON.stringify(obj));
+		localStorage.setItem("ToDo" ,obj);
 		taskList = JSON.parse(localStorage.getItem("ToDo"));
 	}
 }
 //Create new task
 addButton.onclick = function(){
-	if(taskName.value != ""){
+	if(taskName.value){
 		if (typeof(Storage) !== "undefined") {
 			// Storing different values of to do task in an object
 			var obj = {
+			"task" : {
 			"taskName" : taskName.value,
 			"priorityValue" : priorityButton.innerHTML,
 			"status" : 0,
 			"completeDate" : null,
 			"assignDate" : date.value
-			};
+			},
+			"id" : id };
+			id++;
 			taskList.push(obj);
 			//Storing values in local storage with key value pairs
 			localStorage.setItem("ToDo", JSON.stringify(taskList));
@@ -139,15 +143,15 @@ function insertAfter(newNode, referenceNode) {
 //Used to change status and moving task to complete and vice-versa
 function moveAndUpdateTask(btn, name) {
 	for(j=0;j<taskList.length ; j++) {
-		if(taskList[j].taskName == name) {
-			if(taskList[j].status == 0) {
+		if(taskList[j].task.taskName == name) {
+			if(taskList[j].task.status == 0) {
 				var innerDivs = currentTaskDiv.getElementsByTagName("DIV");
 				for(var i = 0 ; i < innerDivs.length ; i++) {
 					var tempbtn = innerDivs[i].getElementsByTagName("button");
 					if(name == tempbtn[1].innerHTML) {
-						taskList[j].status = 1;
-						taskList[j].completeDate = todayDate();
-						localStorage.setItem("ToDo" , JSON.stringify(taskList));
+						taskList[j].task.status = 1;
+						taskList[j].task.completeDate = todayDate();
+						localStorage.setItem("ToDo" , taskList);
 						moveDivFromCurrentToComplete(innerDivs[i]);
 						break;
 					}
@@ -158,9 +162,9 @@ function moveAndUpdateTask(btn, name) {
 				for(var i = 0 ; i < innerDivs.length ; i++) {
 					var tempbtn = innerDivs[i].getElementsByTagName("button");
 					if(name == tempbtn[1].innerHTML) {
-						taskList[j].status = 0;
-						taskList[j].completeDate = null;
-						localStorage.setItem("ToDo" , JSON.stringify(taskList));
+						taskList[j].task.status = 0;
+						taskList[j].task.completeDate = null;
+						localStorage.setItem("ToDo" , taskList);
 						moveDivFromCompleteToCurrent(innerDivs[i]);
 						break;
 					}
@@ -176,24 +180,22 @@ function sorts(sortName , type){
 	clearall();
 	sortButton.innerHTML = sortName;
 	var length = taskList.length;
-	if(type == 1){
-	taskList.sort((a,b) => a.taskName < b.taskName);
-	}
-	else if(type == 2){
-	taskList.sort((a,b) => a.taskName > b.taskName);
-	}
-	else if(type == 3){
-		taskList.sort((a,b) => a.priorityValue < b.priorityValue);
-	}
-	else{
-		taskList.sort((a,b) => a.assignDate > b.assignDate);
+	switch(type){
+		case 1 : taskList.sort((a,b) => a.task.taskName < b.task.taskName);
+						 break;
+	  case 2 : taskList.sort((a,b) => a.task.taskName > b.task.taskName);
+						 break;
+		case 3 : taskList.sort((a,b) => a.task.priorityValue < b.task.priorityValue);
+						 break;
+		case 4 : taskList.sort((a,b) => a.task.assignDate > b.task.assignDate);
+						 break;
 	}
 	for(i = 0 ; i < length ; i++){
-		if(taskList[i].status == 0) {
-			addToCurrentDiv(taskList[i].taskName, taskList[i].priorityValue, taskList[i].assignDate);
+		if(taskList[i].task.status == 0) {
+			addToCurrentDiv(taskList[i].task.taskName, taskList[i].task.priorityValue, taskList[i].task.assignDate);
 		}
 		else {
-			addToCompleteDiv(taskList[i].taskName, taskList[i].priorityValue, taskList[i].assignDate);
+			addToCompleteDiv(taskList[i].task.taskName, taskList[i].task.priorityValue, taskList[i].task.assignDate);
 		}
 	}
 }
@@ -356,12 +358,14 @@ function storeOutput(lines){
 	onload();
 	for (var i = 1; i < lines.length - 1 ; i++) {
 		var obj = {
+			"task" : {
 		"taskName" : lines[i][0],
 		"priorityValue" : lines[i][1],
 		"status" : lines[i][2],
 		"completeDate" : lines[i][3],
 		"assignDate" : lines[i][4]
-		};
+	} ,
+	"id" : lines[i][5] };
 		taskList.push(obj);
 	}
 	localStorage.setItem("ToDo" , JSON.stringify(taskList));
