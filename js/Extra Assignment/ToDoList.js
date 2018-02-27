@@ -129,6 +129,7 @@ function onload(){
 	var key;
 	document.getElementById("date").value = todayDate();
 	if(localStorage.getItem("ToDo") && localStorage.getItem("ToDo") != "null"){
+		objects = JSON.parse(localStorage.getItem("ToDo"));
 	  for(var i = 0 ; i < objects.length ; i++){
 	    key = objects[i];
 	    if(key.status == 0) {
