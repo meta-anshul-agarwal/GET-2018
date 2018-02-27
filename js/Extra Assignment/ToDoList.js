@@ -7,16 +7,16 @@ var completeTaskDiv = document.getElementById('showcompletedtask');
 var completeTaskHeading = document.getElementById('text');
 var priorityButton = document.getElementById('priority');
 var sortButton = document.getElementById('sortButton');
-var objects =  null;
+var taskList =  null;
 
 // to show tasks on UI after reloading , traversing localStorage
 function onload(){
 	var key;
 	document.getElementById("date").value = todayDate();
 	if(localStorage.getItem("ToDo") && localStorage.getItem("ToDo") != "null"){
-		objects = JSON.parse(localStorage.getItem("ToDo"));
-		for(var i = 0 ; i < objects.length ; i++){
-			key = objects[i];
+		taskList = JSON.parse(localStorage.getItem("ToDo"));
+		for(var i = 0 ; i < taskList.length ; i++){
+			key = taskList[i];
 			if(key.status == 0) {
 			addToCurrentDiv(key.taskName,key.priorityValue,key.assignDate);
 			}
@@ -29,7 +29,7 @@ function onload(){
 	else{
 		var obj = [];
 		localStorage.setItem("ToDo" , JSON.stringify(obj));
-		objects = JSON.parse(localStorage.getItem("ToDo"));
+		taskList = JSON.parse(localStorage.getItem("ToDo"));
 	}
 }
 //Create new task
@@ -44,9 +44,9 @@ addButton.onclick = function(){
 			"completeDate" : null,
 			"assignDate" : date.value
 			};
-			objects.push(obj);
+			taskList.push(obj);
 			//Storing values in local storage with key value pairs
-			localStorage.setItem("ToDo", JSON.stringify(objects));
+			localStorage.setItem("ToDo", JSON.stringify(taskList));
 			addToCurrentDiv(taskName.value, priorityButton.innerHTML , date.value);
 		}
 		else {
@@ -103,7 +103,9 @@ function addToCurrentDiv(taskvalue , privalue , datevalue) {
 	span[1].style.display = "none";
   insertAfter(div,currentTaskHeading);
 }
-function divCurrentList(div){
+
+// Div task moves from complete to current
+function moveDivFromCompleteToCurrent(div){
 	div.style.textDecoration = "none";
 	var span = div.getElementsByTagName("span");
 	span[0].style.display = "inline";
@@ -119,7 +121,9 @@ function addToCompleteDiv(taskvalue , privalue, completeDate) {
 	span[1].style.display = "inline";
   insertAfter(div , completeTaskHeading);
 }
-function divCompleteList(div){
+
+// Div task moves from current to complete
+function moveDivFromCurrentToComplete(div){
 	div.style.textDecoration = "line-through";
 	var span = div.getElementsByTagName("span");
 	span[0].style.display = "none";
@@ -134,17 +138,17 @@ function insertAfter(newNode, referenceNode) {
 
 //Used to change status and moving task to complete and vice-versa
 function moveAndUpdateTask(btn, name) {
-	for(j=0;j<objects.length ; j++) {
-		if(objects[j].taskName == name) {
-			if(objects[j].status == 0) {
+	for(j=0;j<taskList.length ; j++) {
+		if(taskList[j].taskName == name) {
+			if(taskList[j].status == 0) {
 				var innerDivs = currentTaskDiv.getElementsByTagName("DIV");
 				for(var i = 0 ; i < innerDivs.length ; i++) {
 					var tempbtn = innerDivs[i].getElementsByTagName("button");
 					if(name == tempbtn[1].innerHTML) {
-						objects[j].status = 1;
-						objects[j].completeDate = todayDate();
-						localStorage.setItem("ToDo" , JSON.stringify(objects));
-						divCompleteList(innerDivs[i]);
+						taskList[j].status = 1;
+						taskList[j].completeDate = todayDate();
+						localStorage.setItem("ToDo" , JSON.stringify(taskList));
+						moveDivFromCurrentToComplete(innerDivs[i]);
 						break;
 					}
 				}
@@ -154,10 +158,10 @@ function moveAndUpdateTask(btn, name) {
 				for(var i = 0 ; i < innerDivs.length ; i++) {
 					var tempbtn = innerDivs[i].getElementsByTagName("button");
 					if(name == tempbtn[1].innerHTML) {
-						objects[j].status = 0;
-						objects[j].completeDate = null;
-						localStorage.setItem("ToDo" , JSON.stringify(objects));
-						divCurrentList(innerDivs[i]);
+						taskList[j].status = 0;
+						taskList[j].completeDate = null;
+						localStorage.setItem("ToDo" , JSON.stringify(taskList));
+						moveDivFromCompleteToCurrent(innerDivs[i]);
 						break;
 					}
 				}
@@ -167,29 +171,29 @@ function moveAndUpdateTask(btn, name) {
 	}
 }
 
-//sorting in descending order
+//sorting
 function sorts(sortName , type){
 	clearall();
 	sortButton.innerHTML = sortName;
-	var length = objects.length;
+	var length = taskList.length;
 	if(type == 1){
-	objects.sort((a,b) => a.taskName < b.taskName);
+	taskList.sort((a,b) => a.taskName < b.taskName);
 	}
 	else if(type == 2){
-	objects.sort((a,b) => a.taskName > b.taskName);
+	taskList.sort((a,b) => a.taskName > b.taskName);
 	}
 	else if(type == 3){
-		objects.sort((a,b) => a.priorityValue < b.priorityValue);
+		taskList.sort((a,b) => a.priorityValue < b.priorityValue);
 	}
 	else{
-		objects.sort((a,b) => a.assignDate > b.assignDate);
+		taskList.sort((a,b) => a.assignDate > b.assignDate);
 	}
 	for(i = 0 ; i < length ; i++){
-		if(objects[i].status == 0) {
-			addToCurrentDiv(objects[i].taskName, objects[i].priorityValue, objects[i].assignDate);
+		if(taskList[i].status == 0) {
+			addToCurrentDiv(taskList[i].taskName, taskList[i].priorityValue, taskList[i].assignDate);
 		}
 		else {
-			addToCompleteDiv(objects[i].taskName, objects[i].priorityValue, objects[i].assignDate);
+			addToCompleteDiv(taskList[i].taskName, taskList[i].priorityValue, taskList[i].assignDate);
 		}
 	}
 }
@@ -227,9 +231,9 @@ function todayDate() {
 //removes repesctive task
 function deletetask(btn,taskvalue){
 	if(confirm("want's to delete task : "+taskvalue)){
-	for(j=0;j<objects.length ; j++){
-		if(objects[j].taskName === taskvalue){
-				if(objects[j].status == 0){
+	for(j=0;j<taskList.length ; j++){
+		if(taskList[j].taskName === taskvalue){
+				if(taskList[j].status == 0){
 				var innerDivs = currentTaskDiv.getElementsByTagName("DIV");
 				}
 				else {
@@ -239,11 +243,127 @@ function deletetask(btn,taskvalue){
 					var tempbtn = innerDivs[i].getElementsByTagName("button");
 					if(btn == tempbtn[0]){
 					innerDivs[i].remove();
-					objects.splice(j,1);
-					localStorage.setItem("ToDo" , JSON.stringify(objects));
+					taskList.splice(j,1);
+					localStorage.setItem("ToDo" , JSON.stringify(taskList));
 					}
 				}
 			}
 		}
 	}
+}
+
+// converts array object to CSV format
+function convertArrayOfObjectsToCSV(args) {
+    var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+
+    data = args.data || null;
+    if (data == null || !data.length) {
+        return null;
+    }
+
+    columnDelimiter = args.columnDelimiter || ',';
+    lineDelimiter = args.lineDelimiter || '\n';
+
+    keys = Object.keys(data[0]);
+
+    result = '';
+    result += keys.join(columnDelimiter);
+    result += lineDelimiter;
+
+    data.forEach(function(item) {
+        ctr = 0;
+        keys.forEach(function(key) {
+            if (ctr > 0) result += columnDelimiter;
+
+            result += item[key];
+            ctr++;
+        });
+        result += lineDelimiter;
+    });
+    return result;
+}
+
+// downloads CSV file with task details
+function downloadCSV(args) {
+    var data, filename, link;
+
+    var csv = convertArrayOfObjectsToCSV({
+        data: taskList
+    });
+    if (csv == null) return;
+    filename = args.filename || 'export.csv';
+
+    if (!csv.match(/^data:text\/csv/i)) {
+        csv = 'data:text/csv;charset=utf-8,' + csv;
+    }
+    data = encodeURI(csv);
+
+    link = document.createElement('a');
+    link.setAttribute('href', data);
+    link.setAttribute('download', filename);
+    link.click();
+}
+
+// handle file to be imported
+function handleFiles(files) {
+	// Check for the various File API support.
+
+	if (window.FileReader)  {
+		// FileReader are supported.
+		document.getElementById("filename").innerHTML = files[0]['name'];
+		getAsText(files[0]);
+	} else {
+		alert('FileReader are not supported in this browser.');
+	}
+}
+
+// checks if file is in text or not
+function getAsText(fileToRead) {
+	var reader = new FileReader();
+	// Handle errors load
+	reader.onload = loadHandler;
+	reader.onerror = errorHandler;
+	// Read file into memory as UTF-8
+	reader.readAsText(fileToRead);
+}
+
+// handles success if file is found
+function loadHandler(event) {
+	var csv = event.target.result;
+	processData(csv);
+}
+// process the data and splits into lines
+function processData(csv) {
+    var allTextLines = csv.split(/\r\n|\n/);
+    var lines = [];
+    while (allTextLines.length) {
+        lines.push(allTextLines.shift().split(','));
+    }
+	storeOutput(lines);
+}
+
+// handles error
+function errorHandler(evt) {
+	if(evt.target.error.name == "NotReadableError") {
+		alert("Canno't read file !");
+	}
+}
+
+// stores output in local storage
+function storeOutput(lines){
+	//Clear previous data
+	localStorage.clear();
+	onload();
+	for (var i = 1; i < lines.length - 1 ; i++) {
+		var obj = {
+		"taskName" : lines[i][0],
+		"priorityValue" : lines[i][1],
+		"status" : lines[i][2],
+		"completeDate" : lines[i][3],
+		"assignDate" : lines[i][4]
+		};
+		taskList.push(obj);
+	}
+	localStorage.setItem("ToDo" , JSON.stringify(taskList));
+	onload();
 }
