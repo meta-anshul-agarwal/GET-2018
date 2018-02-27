@@ -11,23 +11,23 @@ var objects =  null;
 //Create new task
 addButton.onclick = function(){
 	if(taskName.value != ""){
-	  if (typeof(Storage) !== "undefined") {
-		// Storing different values of to do task in an object
-		var obj = {
-		  "taskName" : taskName.value,
-		  "priorityValue" : priorityButton.innerHTML,
-		  "status" : 0,
-		  "completeDate" : null,
+		if (typeof(Storage) !== "undefined") {
+			// Storing different values of to do task in an object
+			var obj = {
+			"taskName" : taskName.value,
+			"priorityValue" : priorityButton.innerHTML,
+			"status" : 0,
+			"completeDate" : null,
 			"assignDate" : date.value
-		};
-		objects.push(obj);
-		//Storing values in local storage with key value pairs
-		localStorage.setItem("ToDo", JSON.stringify(objects));
-		addToCurrentDiv(taskName.value, priorityButton.innerHTML , date.value);
-	  }
-	  else {
-		  document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
-	  }
+			};
+			objects.push(obj);
+			//Storing values in local storage with key value pairs
+			localStorage.setItem("ToDo", JSON.stringify(objects));
+			addToCurrentDiv(taskName.value, priorityButton.innerHTML , date.value);
+		}
+		else {
+			document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+		}
 	}
 	else{
 		alert("Please assign some task");
@@ -87,42 +87,41 @@ function divCurrentList(div){
 }
 //Using to insert after a element
 function insertAfter(newNode, referenceNode) {
-    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+  referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
 
 //Used to change status and moving task to complete and vice-versa
-function moveAndUpdateTask(btn, name){
-	for(j=0;j<objects.length ; j++){
-		 if(objects[j].taskName === name){
-			 if(objects[j].status == 0){
-				 var innerDivs = currentTaskDiv.getElementsByTagName("DIV");
-				 for(var i = 0 ; i < innerDivs.length ; i++) {
-						var tempbtn = innerDivs[i].getElementsByTagName("button");
-						if(name === tempbtn[1].innerHTML){
-							 divCompleteList(innerDivs[i]);
-							 objects[j].status = 1;
-							 objects[j].completeDate = todayDate();
-							 localStorage.setItem("ToDo" , JSON.stringify(objects));
-							 break;
-						 }
+function moveAndUpdateTask(btn, name) {
+	for(j=0;j<objects.length ; j++) {
+		if(objects[j].taskName === name) {
+			if(objects[j].status == 0) {
+				var innerDivs = currentTaskDiv.getElementsByTagName("DIV");
+				for(var i = 0 ; i < innerDivs.length ; i++) {
+					var tempbtn = innerDivs[i].getElementsByTagName("button");
+					if(name === tempbtn[1].innerHTML) {
+						divCompleteList(innerDivs[i]);
+						objects[j].status = 1;
+						objects[j].completeDate = todayDate();
+						break;
 					}
-			 }
-			 else{
-				 var innerDivs = completeTaskDiv.getElementsByTagName("DIV");
-				 for(var i = 0 ; i < innerDivs.length ; i++) {
-						var tempbtn = innerDivs[i].getElementsByTagName("button");
-						if(name == tempbtn[1].innerHTML){
-							objects[j].status = 0;
-				 			objects[j].completeDate = null;
-							divCurrentList(innerDivs[i]);
-							localStorage.setItem("ToDo" , JSON.stringify(objects));
-							break;
-						}
+				}
+			}
+			else {
+				var innerDivs = completeTaskDiv.getElementsByTagName("DIV");
+				for(var i = 0 ; i < innerDivs.length ; i++) {
+					var tempbtn = innerDivs[i].getElementsByTagName("button");
+					if(name == tempbtn[1].innerHTML) {
+						objects[j].status = 0;
+						objects[j].completeDate = null;
+						divCurrentList(innerDivs[i]);
+						break;
 					}
-					break;
-			 }
-		 }
-	 }
+				}
+				localStorage.setItem("ToDo" , JSON.stringify(objects));
+				break;
+			}
+		}
+	}
 }
 // to show tasks on UI after reloading , traversing localStorage
 function onload(){
@@ -130,15 +129,15 @@ function onload(){
 	document.getElementById("date").value = todayDate();
 	if(localStorage.getItem("ToDo") && localStorage.getItem("ToDo") != "null"){
 		objects = JSON.parse(localStorage.getItem("ToDo"));
-	  for(var i = 0 ; i < objects.length ; i++){
-	    key = objects[i];
-	    if(key.status == 0) {
-	      addToCurrentDiv(key.taskName,key.priorityValue,key.assignDate);
-	    }
-	    else {
-	      addToCompleteDiv(key.taskName,key.priorityValue,key.completeDate);
-	    }
-	  }
+		for(var i = 0 ; i < objects.length ; i++){
+			key = objects[i];
+			if(key.status == 0) {
+			addToCurrentDiv(key.taskName,key.priorityValue,key.assignDate);
+			}
+			else {
+			addToCompleteDiv(key.taskName,key.priorityValue,key.completeDate);
+			}
+		}
 	}
 	else{
 		var obj = [];
@@ -149,59 +148,59 @@ function onload(){
 //sorting in descending order
 function sorts(sortName , type){
 	var innerDivs = currentTaskDiv.getElementsByTagName("DIV");
-  var innerDivs1 = completeTaskDiv.getElementsByTagName("DIV");
-  clearall();
-  sortButton.innerHTML = sortName;
-  document.getElementById("date").value = todayDate();
+	var innerDivs1 = completeTaskDiv.getElementsByTagName("DIV");
+	clearall();
+	sortButton.innerHTML = sortName;
+	document.getElementById("date").value = todayDate();
 	var length = objects.length;
 	if(type == 1){
-		objects.sort(GetAscendingSortOrder("taskName"));
+	objects.sort(GetAscendingSortOrder("taskName"));
 	}
 	else{
-		objects.sort(GetDescendingSortOrder("taskName"));
+	objects.sort(GetDescendingSortOrder("taskName"));
 	}
-  for(i = 0 ; i < length ; i++){
-    if(objects[i].status == 0) {
+	for(i = 0 ; i < length ; i++){
+		if(objects[i].status == 0) {
 			if(type == 2){
-      	addToCurrentDiv(objects[i].taskName, objects[i].priorityValue, objects[i].assignDate);
+			addToCurrentDiv(objects[i].taskName, objects[i].priorityValue, objects[i].assignDate);
 			}
 			else{
-				addToCurrentDiv(objects[i].taskName, objects[i].priorityValue, objects[i].assignDate);
+			addToCurrentDiv(objects[i].taskName, objects[i].priorityValue, objects[i].assignDate);
 			}
-    }
-    else {
+		}
+		else {
 			if(type == 2){
-      	addToCompleteDiv(objects[i].taskName, objects[i].priorityValue, objects[i].completeDate);
+			addToCompleteDiv(objects[i].taskName, objects[i].priorityValue, objects[i].completeDate);
 			}
 			else{
-				addToCompleteDiv(objects[i].taskName, objects[i].priorityValue, objects[i].completeDate);
+			addToCompleteDiv(objects[i].taskName, objects[i].priorityValue, objects[i].completeDate);
 			}
-    }
-  }
+		}
+	}
 }
 
 // gives decreasing sorting order
 function GetDescendingSortOrder(task) {
-    return function(a, b) {
-        if (a[task] > b[task]) {
-            return 1;
-        } else if (a[task] < b[task]) {
-            return -1;
-        }
-        return 0;
+  return function(a, b) {
+    if (a[task] > b[task]) {
+        return 1;
+    } else if (a[task] < b[task]) {
+        return -1;
     }
+    return 0;
+  }
 }
 
 // gives increasing sorting order
 function GetAscendingSortOrder(task) {
-    return function(a, b) {
-        if (a[task] < b[task]) {
-            return 1;
-        } else if (a[task] > b[task]) {
-            return -1;
-        }
-        return 0;
+  return function(a, b) {
+    if (a[task] < b[task]) {
+        return 1;
+    } else if (a[task] > b[task]) {
+        return -1;
     }
+    return 0;
+  }
 }
 //remove all task from UI
 function clearall() {
@@ -209,13 +208,11 @@ function clearall() {
   var innerDivs1 = completeTaskDiv.getElementsByTagName("DIV");
   var mainlength = innerDivs.length;
   var completedlength = innerDivs1.length;
-  for(var i = 0 ; i < mainlength ; i++)
-  {
-       innerDivs[0].remove();
+  for(var i = 0 ; i < mainlength ; i++) {
+  	innerDivs[0].remove();
   }
-  for(var i = 0 ; i < completedlength ; i++)
-  {
-       innerDivs1[0].remove();
+  for(var i = 0 ; i < completedlength ; i++) {
+  	innerDivs1[0].remove();
   }
 }
 
@@ -226,36 +223,35 @@ function todayDate() {
   var mm = today.getMonth()+1;
   var yyyy = today.getFullYear();
   if(dd<10) {
-      dd = '0'+dd
+      dd = '0'+dd;
   }
   if(mm<10) {
-      mm = '0'+mm
+      mm = '0'+mm;
   }
   today = yyyy+"-"+mm+"-"+dd;
   return today;
 }
 
-
 //removes repesctive task
 function deletetask(btn,taskvalue){
-  if(confirm("want's to delete task : "+taskvalue)){
-		for(j=0;j<objects.length ; j++){
-			 if(objects[j].taskName === taskvalue){
-				 if(objects[j].status == 0){
-					 var innerDivs = currentTaskDiv.getElementsByTagName("DIV");
-				 }
-				 else{
-					 var innerDivs = completeTaskDiv.getElementsByTagName("DIV");
-				 }
-	    for(var i = 0 ; i < innerDivs.length ; i++) {
-	       var tempbtn = innerDivs[i].getElementsByTagName("button");
-	       if(btn == tempbtn[0]){
-	         	innerDivs[i].remove();
-	       		objects.splice(j,1);
-						localStorage.setItem("ToDo" , JSON.stringify(objects));
+	if(confirm("want's to delete task : "+taskvalue)){
+	for(j=0;j<objects.length ; j++){
+		if(objects[j].taskName === taskvalue){
+				if(objects[j].status == 0){
+				var innerDivs = currentTaskDiv.getElementsByTagName("DIV");
+				}
+				else {
+				var innerDivs = completeTaskDiv.getElementsByTagName("DIV");
+				}
+				for(var i = 0 ; i < innerDivs.length ; i++) {
+					var tempbtn = innerDivs[i].getElementsByTagName("button");
+					if(btn == tempbtn[0]){
+					innerDivs[i].remove();
+					objects.splice(j,1);
+					localStorage.setItem("ToDo" , JSON.stringify(objects));
 					}
-	     }
-		 }
-    }
-  }
+				}
+			}
+		}
+	}
 }
