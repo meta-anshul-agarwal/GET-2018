@@ -24,6 +24,7 @@ function onload(){
 			addToCompleteDiv(key.taskName,key.priorityValue,key.assignDate);
 			}
 		}
+		sorts('Sort' , 4);
 	}
 	else{
 		var obj = [];
@@ -174,8 +175,14 @@ function sorts(sortName , type){
 	if(type == 1){
 	objects.sort((a,b) => a.taskName < b.taskName);
 	}
-	else{
+	else if(type == 2){
 	objects.sort((a,b) => a.taskName > b.taskName);
+	}
+	else if(type == 3){
+		objects.sort((a,b) => a.priorityValue < b.priorityValue);
+	}
+	else{
+		objects.sort((a,b) => a.assignDate > b.assignDate);
 	}
 	for(i = 0 ; i < length ; i++){
 		if(objects[i].status == 0) {
