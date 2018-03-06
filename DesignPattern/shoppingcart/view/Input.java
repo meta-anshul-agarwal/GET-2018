@@ -8,13 +8,19 @@ import com.metacube.shoppingcart.dao.status;
 import com.metacube.shoppingcart.entity.Product;
 import com.metacube.shoppingcart.entity.ShoppingCartProduct;
 
+// Taking Input and showing Output
 public class Input {
 	static Scanner input  = new Scanner(System.in);
 	public void takeInput(){
 		int choice;
+		
+		// controller object
 		Controller control = Controller.getInstance();
+		
+		// product List initialization
 		control.productInitialization();
-		int quantity , productId;
+		int quantity ;
+		int productId;
 		status st;
 		do{
 			System.out.println("1. Show All Products");
@@ -36,7 +42,7 @@ public class Input {
 					System.out.println("Enter quantity");
 					quantity = input.nextInt();
 					ShoppingCartProduct product = new ShoppingCartProduct(productId , quantity);
-					st = control.addProduct(product);
+					st = control.addShoppingProduct(product);
 					System.out.println(st);
 					break;
 				case 3: 

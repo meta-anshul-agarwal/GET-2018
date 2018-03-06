@@ -11,18 +11,22 @@ import com.metacube.shoppingcart.entity.ShoppingCartProduct;
 
 public class InMemoryDao implements BaseDao {
 	
+	// map to hold shopping products
 	Map<Integer , ShoppingCartProduct> productMap = new HashMap<>();
 	
-
+	// returns all shopping products
 	public List<ShoppingCartProduct> getAllShoppingCartProducts() {
 		List<ShoppingCartProduct> shoppingProductList = new ArrayList<ShoppingCartProduct>(productMap.values());
 		return shoppingProductList;
 	}
 
-	public status addProduct(ShoppingCartProduct product) {
+	// add product in map and returns status
+	public status addShoppingProduct(ShoppingCartProduct product) {
 		
 		this.productMap.put(product.getId(), product);
 		ProductDao productdao = ProductDao.getInstance();
+		
+		// loop for updating stock
 		for(Product p : productdao.getProductList()){
 			if(p.getId() == product.getId()){
 				p.setStock(product.getQuantity());
@@ -35,25 +39,29 @@ public class InMemoryDao implements BaseDao {
 		
 	}
 
+	// delete product from map and returns status
 	@Override
 	public status deleteShoppingProduct(int id) {
-		// TODO Auto-generated method stub
 		productMap.remove(id);
 		return status.Deleted;
 	}
 
+	// updates product quantity
 	@Override
 	public status updateShoppingProduct(int productId, int quantity) {
-		// TODO Auto-generated method stub
 		ProductDao productdao = ProductDao.getInstance();
+		
+		// loop to update stock in product list
 		for(Product p : productdao.getProductList()){
 			if(p.getId() == productId){
 				p.setUpdatedStock(quantity);
 				productdao.productList.set(p.getId()-1, p);	
 			}
 		}
+		
 		ShoppingCartProduct shoppingCartProduct = productMap.get(productId);
 		shoppingCartProduct.setQuantity(quantity);
+		
 		return status.Updated;
 	}
 	

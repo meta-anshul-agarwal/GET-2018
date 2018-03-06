@@ -2,7 +2,7 @@ package com.metacube.shoppingcart.entity;
 
 import java.util.UUID;
 
-public class ShoppingCartProduct {
+public class ShoppingCartProduct extends BaseEntity{
 	private int id;
 	private int quantity;
 	

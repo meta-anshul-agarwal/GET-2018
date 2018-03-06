@@ -1,6 +1,6 @@
 package com.metacube.shoppingcart.entity;
 
-public class Product {
+public class Product extends BaseEntity{
 	private int id ;
 	private String name;
 	private float price;

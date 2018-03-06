@@ -9,11 +9,13 @@ import com.metacube.shoppingcart.dao.ProductFactory;
 import com.metacube.shoppingcart.dao.db;
 import com.metacube.shoppingcart.entity.Product;
 
+
 public class ProductFacade {
 	
 	ProductDao productdao = new ProductDao();
 	private static ProductFacade obj;
 	
+	// singleton object
 	public static ProductFacade getInstance() {
 		if (obj == null) {
 			obj = new ProductFacade();
@@ -22,8 +24,8 @@ public class ProductFacade {
 		return obj;
 	}
 	
+	// returns list of all products in database
 	public List<Product> getAllProducts() {
-		// TODO Auto-generated method stub
 		return productdao.getProductList();
 	}
 
