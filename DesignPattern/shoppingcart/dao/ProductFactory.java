@@ -7,19 +7,20 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.metacube.shoppingcart.entity.ShoppingCartProduct;
+import com.metacube.shoppingcart.enums.DBName;
 
 // returns object of a particular database class object
 public class ProductFactory{
 	
 	private static BaseDao obj;
-	public static BaseDao getInstance(db dbName) {
+	public static BaseDao getInstance(DBName dbName) {
 		
 		switch(dbName){
 		
-			case InMemory : obj = new InMemoryDao();
+			case INMEMORY : obj = new InMemoryShoppingCartDao();
 							return obj;
 							
-			case Sql : return null;
+			case SQL : return null;
 		
 		}
 		return null;	

@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.metacube.shoppingcart.dao.BaseDao;
-import com.metacube.shoppingcart.dao.InMemoryDao;
+import com.metacube.shoppingcart.dao.InMemoryShoppingCartDao;
 import com.metacube.shoppingcart.dao.ProductFactory;
-import com.metacube.shoppingcart.dao.db;
-import com.metacube.shoppingcart.dao.status;
 import com.metacube.shoppingcart.entity.ShoppingCartProduct;
+import com.metacube.shoppingcart.enums.DBName;
+import com.metacube.shoppingcart.enums.Status;
 
 
 // shopping cart products facade
@@ -16,7 +16,7 @@ public class ShoppingCartProductFacade {
 	private static ShoppingCartProductFacade obj;
 	
 	// object of particular database 
-	BaseDao basedao =(InMemoryDao) ProductFactory.getInstance(db.InMemory);
+	InMemoryShoppingCartDao inMemoryShoppingCartDao = (InMemoryShoppingCartDao) ProductFactory.getInstance(DBName.INMEMORY);
 	
 	// singleton object
 	public static ShoppingCartProductFacade getInstance() {
@@ -31,21 +31,21 @@ public class ShoppingCartProductFacade {
 	
 	// returns all shopping cart products
 	public List<ShoppingCartProduct> getAllShoppingCartProducts(){
-		return basedao.getAllShoppingCartProducts();
+		return inMemoryShoppingCartDao.getAllShoppingCartProducts();
 	}
 	
 	// adds product and return status
-	public status addShoppingProduct(ShoppingCartProduct product) {
-		return basedao.addShoppingProduct(product);	
+	public Status addShoppingProduct(ShoppingCartProduct product) {
+		return inMemoryShoppingCartDao.addShoppingProduct(product);	
 	}
 
 	// delete product from shopping cart and return status
-	public status deleteShoppingProduct(int id) {
-		return basedao.deleteShoppingProduct(id);
+	public Status deleteShoppingProduct(int id) {
+		return inMemoryShoppingCartDao.deleteShoppingProduct(id);
 	}
 
 	// update cart product
-	public status updateShoppingProduct(int productId, int quantity) {
-		return basedao.updateShoppingProduct(productId , quantity);
+	public Status updateShoppingProduct(int productId, int quantity) {
+		return inMemoryShoppingCartDao.updateShoppingProduct(productId , quantity);
 	}
 }

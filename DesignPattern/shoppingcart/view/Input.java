@@ -3,10 +3,11 @@ package com.metacube.shoppingcart.view;
 import java.util.List;
 import java.util.Scanner;
 
-import com.metacube.shoppingcart.controller.Controller;
-import com.metacube.shoppingcart.dao.status;
+import com.metacube.shoppingcart.controller.ProductController;
+import com.metacube.shoppingcart.controller.ShoppingCartController;
 import com.metacube.shoppingcart.entity.Product;
 import com.metacube.shoppingcart.entity.ShoppingCartProduct;
+import com.metacube.shoppingcart.enums.Status;
 
 // Taking Input and showing Output
 public class Input {
@@ -15,13 +16,16 @@ public class Input {
 		int choice;
 		
 		// controller object
-		Controller control = Controller.getInstance();
+		ShoppingCartController shoppingCartControl = ShoppingCartController.getInstance();
+		
+		ProductController productController = ProductController.getInstance(); 
 		
 		// product List initialization
-		control.productInitialization();
+		productController.productInitialization();
+		
 		int quantity ;
 		int productId;
-		status st;
+		Status st;
 		do{
 			System.out.println("1. Show All Products");
 			System.out.println("2. Add Product");
@@ -32,7 +36,7 @@ public class Input {
 			choice = input.nextInt();
 			switch(choice) {
 				case 1:
-					for(Product s: control.getAllProducts()){
+					for(Product s: productController.getAllProducts()){
 						System.out.println(s.getId() + "  " + s.getName()+"  "+s.getPrice() +" "+s.getStock());
 					}
 					break;
@@ -42,13 +46,13 @@ public class Input {
 					System.out.println("Enter quantity");
 					quantity = input.nextInt();
 					ShoppingCartProduct product = new ShoppingCartProduct(productId , quantity);
-					st = control.addShoppingProduct(product);
+					st = shoppingCartControl.addShoppingProduct(product);
 					System.out.println(st);
 					break;
 				case 3: 
 					System.out.println("Enter product id");
 					productId = input.nextInt();
-					st = control.deleteShoppingProduct(productId);
+					st = shoppingCartControl.deleteShoppingProduct(productId);
 					System.out.println(st);
 					break;
 				case 4:
@@ -56,11 +60,11 @@ public class Input {
 					productId = input.nextInt();
 					System.out.println("Enter updated quantity");
 					quantity = input.nextInt();
-					st = control.updateShoppingProduct(productId , quantity);
+					st = shoppingCartControl.updateShoppingProduct(productId , quantity);
 					break;
 				case 5: 
-					for(ShoppingCartProduct s: control.getAllShoppingCartProducts()){
-						for(Product p: control.getAllProducts()){
+					for(ShoppingCartProduct s: shoppingCartControl.getAllShoppingCartProducts()){
+						for(Product p: productController.getAllProducts()){
 							if(s.getId() == p.getId())
 								System.out.println( p.getId() + "  " + p.getName()+"  "+p.getPrice() + "  " + s.getQuantity());
 						}
