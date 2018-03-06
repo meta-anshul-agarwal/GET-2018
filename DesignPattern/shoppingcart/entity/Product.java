@@ -1,35 +1,52 @@
 package com.metacube.shoppingcart.entity;
 
-import java.util.UUID;
-
 public class Product {
-	private String id;
+	private int id ;
 	private String name;
 	private float price;
+	private int stock;
 	
-	public Product(String name, float price){
+	public Product(int id, String name, float price, int stock) {
+		super();
+		this.id = id;
 		this.name = name;
 		this.price = price;
-		UUID uuid = UUID.randomUUID();
-		this.id = uuid.toString();
+		this.stock = stock;
 	}
-	
-	public float getPrice() {
-		return price;
-	}
-	public void setPrice(float price) {
-		this.price = price;
-	}
-	
-	public String getId() {
+
+	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock -= stock;
+	}
 	
+	public void setUpdatedStock(int quantity){
+		this.stock += quantity;
+	}
 }

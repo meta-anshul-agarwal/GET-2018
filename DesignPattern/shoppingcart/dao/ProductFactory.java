@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.metacube.shoppingcart.entity.Product;
+import com.metacube.shoppingcart.entity.ShoppingCartProduct;
 
 public class ProductFactory{
 	
@@ -20,9 +20,5 @@ public class ProductFactory{
 	return null;	
 	}
 	private ProductFactory() {}
-	
-	
-	
-
 	
 }
