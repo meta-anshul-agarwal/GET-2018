@@ -12,13 +12,13 @@ import com.metacube.shoppingcart.enums.DBName;
 // returns object of a particular database class object
 public class ProductFactory{
 	
-	private static BaseDao obj;
+	private static BaseDao basedao;
 	public static BaseDao getInstance(DBName dbName) {
 		
 		switch(dbName){
 		
-			case INMEMORY : obj = new InMemoryShoppingCartDao();
-							return obj;
+			case INMEMORY : basedao = new InMemoryShoppingCartDao();
+							return basedao;
 							
 			case SQL : return null;
 		

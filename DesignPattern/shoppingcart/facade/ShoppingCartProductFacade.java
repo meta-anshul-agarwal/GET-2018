@@ -13,18 +13,18 @@ import com.metacube.shoppingcart.enums.Status;
 
 // shopping cart products facade
 public class ShoppingCartProductFacade {
-	private static ShoppingCartProductFacade obj;
+	private static ShoppingCartProductFacade shoppingCartProductFacade;
 	
 	// object of particular database 
 	InMemoryShoppingCartDao inMemoryShoppingCartDao = (InMemoryShoppingCartDao) ProductFactory.getInstance(DBName.INMEMORY);
 	
 	// singleton object
 	public static ShoppingCartProductFacade getInstance() {
-		if (obj == null) {
-			obj = new ShoppingCartProductFacade();
+		if (shoppingCartProductFacade == null) {
+			shoppingCartProductFacade = new ShoppingCartProductFacade();
 		}
 		
-		return obj;
+		return shoppingCartProductFacade;
 	}
 	
 	private ShoppingCartProductFacade() {}

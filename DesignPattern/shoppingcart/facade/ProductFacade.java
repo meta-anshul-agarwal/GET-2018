@@ -15,14 +15,14 @@ public class ProductFacade {
 	
 	InMemoryProductDao productdao =InMemoryProductDao.getInstance();
 	
-	private static ProductFacade obj;
+	private static ProductFacade productFacade;
 	
 	// singleton object
 	public static ProductFacade getInstance() {
-		if (obj == null) {
-			obj = new ProductFacade();
+		if (productFacade == null) {
+			productFacade = new ProductFacade();
 		}
-		return obj;
+		return productFacade;
 	}
 	
 	// returns list of all products in database
