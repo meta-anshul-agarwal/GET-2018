@@ -1,0 +1,73 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <link href="style.css" rel = "stylesheet">
+  </head>
+  <body onload="onload();">
+    <div class="card" style="width: 100%;border : none;">
+      <div class="card-block">
+        <h3 class="card-title" style="border-bottom : solid 1px;">TO DO LIST</h3>
+        <div class = "row">
+          <div class = "col-xl-3">
+            <h5>To Do</h5>
+            <input class="form-control input-lg" type="text" id = "content" name = "content" placeholder="enter text...."/>
+          </div>
+          <div class = "col-xl-1 col-md-6 col-sm-6 col-lg-6">
+            <h5>Priority</h5>
+            <button type="button" id = "priority" class="btn btn-success btn-block dropdown-toggle" data-toggle="dropdown">5</button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:changePriority(5);">5</a>
+              <a class="dropdown-item" href="javascript:changePriority(4);">4</a>
+              <a class="dropdown-item" href="javascript:changePriority(3);">3</a>
+              <a class="dropdown-item" href="javascript:changePriority(2);">2</a>
+              <a class="dropdown-item" href="javascript:changePriority(1);">1</a>
+            </div>
+          </div>
+          <div class = "col-xl-2 col-md-6 col-sm-6 col-lg-6">
+            <h5>Date</h5>
+            <input class="form-control input-sm" type="date" id = "date" name = "date"/>
+          </div>
+          <div class = "col-xl-1 col-md-6 col-sm-6 col-lg-6" style="margin-top : 1.8%;">
+            <button type="button" id = "add" class="btn btn-primary btn-block mt-1" style="float:right;">Add</button>
+          </div>
+          <div class = "col-xl-1 col-md-6 col-sm-6 col-lg-6" style="margin-top : 1.8%;">
+            <div class="btn-group btn-block">
+              <button type="button" id = "sortButton" class="btn btn-danger btn-block dropdown-toggle mt-1" data-toggle="dropdown">Sort</button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="javascript:sorts('A-Z',1)">A-Z</a>
+                <a class="dropdown-item" href="javascript:sorts('Z-A',2)">Z-A</a>
+                <a class="dropdown-item" href="javascript:sorts('Priority',3)">Priority</a>
+                <a class="dropdown-item" href="javascript:sorts('Date',4)">Date</a>
+              </div>
+            </div>
+          </div>
+          <div class = "col-xl-2 col-md-6 col-sm-6 col-lg-6" style="margin-top : 1.8%;">
+            <BUTTON class="btn btn-danger btn-block mt-1 h6" onclick='downloadCSV({ filename: "ToDoList-data.csv" });'>Download CSV</Button>
+          </div>
+          <div class = "col-xl-2 col-md-6 col-sm-6 col-lg-6" style="margin-top : 2.0%;">
+            <label class="custom-file">
+              <input type = "file" class="custom-file-input" onchange='handleFiles(this.files);' accept = ".csv"/>
+              <span class="custom-file-control" id = "filename">choose file.....</span>
+          </label>
+          </div>
+        </div>
+        <div class = "row mt-3">
+          <div class = "col-xl-6 p-3 col-md-6 col-sm-6" id = "showtask" style = " border-right: solid 2px;">
+            <p id = "currentTaskHeading" class = "h6" style="border-bottom:solid 1px;">Current Task
+              <span class = "text-muted ml-2" style="font-size : 80%;">( *Click on Task name for completion )</span>
+            </p>
+          </div>
+          <div class = "col-xl-6 p-3 col-md-6 col-sm-6" id = "showcompletedtask" >
+            <p id = "text" class = "h6" style="border-bottom:solid 1px;">Completed Task
+              <span class = "text-muted ml-2" style="font-size : 80%;">( *Click on Task name for undo completion )</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src = "ToDoList.js"></script>
+  </body>
+</html>

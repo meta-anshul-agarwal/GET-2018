@@ -1,0 +1,13 @@
+body{
+  margin : 20px;
+}
+table{
+  column-width: 60px;
+
+}
+tr{
+  outline:solid 2px black;
+}
+input{
+  width : 10%;
+}

@@ -1,0 +1,27 @@
+.taskButton {
+  background : white;
+  border : none;
+  height : 20px;
+  width : auto;
+  cursor : pointer;
+  data-toggle : tooltip;
+  data-placement : "bottom";
+  display: inline;
+}
+.dltButton {
+  height : 16px;
+  width : 16px;
+  background : white;
+  background-image : url("https://cdn0.iconfinder.com/data/icons/pixon-1/24/Close_delete_outline_remove-16.png");
+  border : none;
+  cursor : pointer;
+}
+.complete-date , .assign-date{
+  display: inline;
+  float : right;
+}
+
+.priButton{
+  display: inline;
+  padding-left: 10px;
+}

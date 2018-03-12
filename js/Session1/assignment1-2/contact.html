@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>HTML-Session-1 Assignment2</title>
+</head>
+<body>
+	<div align="center">
+
+		<!-- navigation bar -->
+		<nav id="navbar">
+			<table width="1000">
+				<tbody align="center">
+					<tr>
+						<td width="100">
+							<img src="HTML5.png" width="50"/>
+						</td>
+						<td align="right">
+							<a href="javascript:gotohome()">Home</a>
+							<a href="#">About</a>
+							<a href="#">Product</a>
+							<a href="#">Gallery</a>
+							<a href="javascript:gotocontact()">Contact</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</nav>
+		<hr>
+		<br>
+
+		<div id="image-container">
+			<table width="1000">
+				<tbody align="center">
+					<tr>
+						<td>
+							<img src="contact_us.jpg" width="1000"/>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<br>
+		<br>
+		<br>
+		<br>
+
+		<!-- form -->
+		<div id="form-container">
+			<form name = "contact" action="" method = "get">
+				<table>
+					<tbody>
+						<tr>
+							<td>Name</td>
+							<td><input type="text" name="name" /></td>
+						</tr>
+						<tr>
+							<td>Email</td>
+							<td><input type="email" name="email"/></td>
+						</tr>
+						<tr>
+							<td>City</td>
+							<td><select name = "city" onchange = "showcity()">
+									<option selected disabled> </option>
+									<option value = "jaipur">Jaipur</option>
+									<option value="gwalior">Gwalior</option>
+								</select>
+							</td>
+						</tr>
+						<tr style = "display: none" id = "citybox">
+							<td>City</td>
+							<td><input type="City" name="citytext" disabled="true" width="100%"/></td>
+						</tr>
+						<tr>
+							<td>Organization <br>Name</td>
+							<td><input type="text" name="organization" /></td>
+						</tr>
+						<tr>
+							<td>Contact <br>Number</td>
+							<td><input type="text" name="number"/></td>
+						</tr>
+						<tr>
+							<td>Message</td>
+							<td>
+								<textarea name = "textarea"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td><input type="submit" value="Submit" onclick="return validation()" /></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+		<hr>
+
+		<!-- footer -->
+		<div id="footer">
+			<table width="1000">
+				<tbody align="center">
+					<tr>
+						<td>
+							&copy; Copyright 2016-17 | All Rights Reserved | Metacube Training
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script src = "validation.js"></script>
+	<script src = "linking.js"></script>
+</body>
+</html>
