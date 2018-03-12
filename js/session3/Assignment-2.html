@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript-Session-3 Assignment 2</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		div{
+			width: 25%;
+			float: left;
+			text-align: center;
+			margin-top: 40px;
+		}
+		input[type="radio"] {
+			transform: scale(2);
+			margin-right: 20px;
+			display: inline-block;
+		}
+</style>
+</head>
+<body>
+	<div>
+		<input type='radio' name='first' value="Hi"/> Hi
+		<br><br>
+		<input type='radio' name='first' value="Hello"/> Hello
+	</div>
+	<div>
+		<input type='radio' name='second' value="Anshul"/> Anshul
+		<br><br>
+		<input type='radio' name='second' value="Mr. Anshul"/> Mr. Anshul
+	</div>
+	<script src="script.js"></script>
+	<script>
+		var first = "";
+		var second = "";
+		
+		/* adding onclick event to the radio button with name first */
+		js( "input[name='first']" ).on ('click', function () {
+			first = this.value;
+			show();
+		});
+		
+		/* adding onclick event to the radio button with name second */
+		js( "input[name='second']" ).on ('click', function () {
+			second = this.value;
+			show ();
+		});
+		
+		/*function to show the different messages in each combination*/
+		var show = function () {
+			alert(first + " " + second);
+		};
+	</script>
+</body>
+</html>

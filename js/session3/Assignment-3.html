@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript-Session-3 Assignment 3</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		div{
+			width: 25%;
+			float:left;
+			text-align: center;
+			margin-top: 40px;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<select id="h">
+			<option>Rajasthan</option>
+			<option>Madhya Pradesh</option>
+		</select>
+		<br><br>
+		<select id="g">
+			<option>Jaipur</option>
+			<option>Udaipur</option>
+		</select>
+	</div>
+	<div>
+		<input type='radio' data-id="#h" name='second' />State
+		<br><br>
+		<input type='radio' data-id="#g" name='second' />City
+	</div>
+	
+	<script src="script.js"></script>
+	<script>
+		
+		/*adding onclick event to the radio button*/
+		js("input[name='second']").on('click', function () {
+			show(this.getAttribute('data-id'));
+		});
+		
+		/* method to show or alert the value of select tag with respect to radio button*/
+		function show(id){
+			alert(document.querySelector(id).value);
+		}
+	</script>
+</body>
+</html>
